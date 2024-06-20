@@ -1,6 +1,23 @@
+server:
+  port: 9090
+
 spring:
   application:
     name: ddd-lease-api
+  modulith:
+    moments:
+      enable-time-machine: true
+      granularity: hours
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lease-api?createDatabaseIfNotExist=true
+    username: admin
+    password: secret
 
-server:
-  port: 8080
+management:
+  endpoint:
+    modulith:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, info, modulith
