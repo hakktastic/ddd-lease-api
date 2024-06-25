@@ -2,7 +2,6 @@ package nl.svb.dms.ddd_lease_api.sales.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.svb.dms.ddd_lease_api.sales.domain.Quote;
 import nl.svb.dms.ddd_lease_api.sales.domain.QuoteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +20,11 @@ class QuoteController {
     private final QuoteService quoteService;
 
     @PostMapping
-    ResponseEntity<Quote> fillOut(@RequestBody Quote quote) {
-        return new ResponseEntity<>(quoteService.fillOut(quote).orElseThrow(), HttpStatus.CREATED);
+    ResponseEntity<QuoteDTO> fillOut(@RequestBody QuoteDTO quoteDTO) {
+
+        final var filledOutQuote = quoteService.fillOut(quoteDTO.toQuote()).orElseThrow();
+        final var quoteResponseDTO = QuoteDTO.from(filledOutQuote);
+
+        return new ResponseEntity<>(quoteResponseDTO, HttpStatus.CREATED);
     }
 }
