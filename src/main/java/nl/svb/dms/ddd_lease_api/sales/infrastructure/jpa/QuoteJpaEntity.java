@@ -10,7 +10,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import nl.svb.dms.ddd_lease_api.sales.domain.Quote;
+import nl.svb.dms.ddd_lease_api.sales.domain.*;
 
 @Getter
 @Setter
@@ -39,24 +39,28 @@ public class QuoteJpaEntity {
 
     public static QuoteJpaEntity from(final Quote quote) {
 
-        final var quoteEntity = new QuoteJpaEntity();
-        quoteEntity.setCar(quote.getCar());
-        quoteEntity.setLeasePrice(quote.getLeasePrice());
-        quoteEntity.setMileage(quote.getMileage());
-        quoteEntity.setDuration(quote.getDuration());
-        quoteEntity.setCustomer(quote.getCustomer());
+        final var quoteJpaEntity = new QuoteJpaEntity();
+        final var quoteDomainEntity = quote.getQuoteEntity();
 
-        return quoteEntity;
+        quoteJpaEntity.setCar(quoteDomainEntity.getCar().getCar());
+        quoteJpaEntity.setLeasePrice(quoteDomainEntity.getLeasePrice().getLeasePrice());
+        quoteJpaEntity.setMileage(quoteDomainEntity.getMileage().getMileage());
+        quoteJpaEntity.setDuration(quoteDomainEntity.getDuration().getDuration());
+        quoteJpaEntity.setCustomer(quoteDomainEntity.getCustomer().getCustomer());
+
+        return quoteJpaEntity;
     }
 
     public Quote toQuote() {
 
         final var quote = Quote.of();
-        quote.setDuration(this.duration);
-        quote.setMileage(this.mileage);
-        quote.setLeasePrice(this.leasePrice);
-        quote.setCar(this.car);
-        quote.setCustomer(this.customer);
+        quote.setQuoteEntity(QuoteEntity.of(
+                Duration.of(this.duration),
+                Mileage.of(this.mileage),
+                LeasePrice.of(this.leasePrice),
+                Car.of(this.car),
+                Customer.of(this.customer)
+        ));
 
         return quote;
     }
