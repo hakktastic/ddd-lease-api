@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class QuoteRepositoryAdapter implements QuoteRepository {
+class QuoteRepositoryAdapter implements QuoteRepository {
 
     private final QuoteJpaRepository repository;
 

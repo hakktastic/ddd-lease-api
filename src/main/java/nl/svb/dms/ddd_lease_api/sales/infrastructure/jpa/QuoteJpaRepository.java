@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface QuoteJpaRepository extends CrudRepository<QuoteJpaEntity, Long> {
+interface QuoteJpaRepository extends CrudRepository<QuoteJpaEntity, Long> {
 }

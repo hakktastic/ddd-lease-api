@@ -16,7 +16,7 @@ import nl.svb.dms.ddd_lease_api.sales.domain.*;
 @Setter
 @ToString
 @Entity(name = "quote")
-public class QuoteJpaEntity {
+class QuoteJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
