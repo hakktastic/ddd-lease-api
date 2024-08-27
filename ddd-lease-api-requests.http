@@ -1,0 +1,75 @@
+###
+# @name fill out: FILLED_OUT
+POST http://localhost:9090/api/v1/quotes
+Content-Type: application/json
+
+{
+  "leaseDuration": 48,
+  "mileage": 35000,
+  "customerFirstname": "Hakk",
+  "customerLastname": "Fantastic",
+  "customerEmail": "hakktastic@gmail.com",
+  "customerBirthDate": "11-11-1950",
+  "customerYearlyIncome": 95000,
+  "carBrand": "Audi",
+  "carModel": "A6",
+  "carCatalogPrice": 65000
+}
+
+###
+
+# @name fill out: REJECTED_MIN_AGE
+POST http://localhost:9090/api/v1/quotes
+Content-Type: application/json
+
+{
+  "leaseDuration": 48,
+  "mileage": 35000,
+  "customerFirstname": "Hans",
+  "customerLastname": "Bakker",
+  "customerEmail": "hans.bakker@gmail.com",
+  "customerBirthDate": "01-03-2006",
+  "customerYearlyIncome": 95000,
+  "carBrand": "Audi",
+  "carModel": "A4",
+  "carCatalogPrice": 50000
+}
+
+###
+
+# @name fill out: REJECTED_MIN_INCOME
+POST http://localhost:9090/api/v1/quotes
+Content-Type: application/json
+
+{
+  "leaseDuration": 48,
+  "mileage": 35000,
+  "customerFirstname": "Sjaak",
+  "customerLastname": "GroenteBoer",
+  "customerEmail": "sjakko@gmail.com",
+  "customerBirthDate": "01-06-1980",
+  "customerYearlyIncome": 5000,
+  "carBrand": "Volkswagen",
+  "carModel": "Polo",
+  "carCatalogPrice": 25000
+}
+
+###
+@quoteReference = a48a5751-9ca4-49f2-acf9-a6146b070f24
+# @name calculate installment
+PATCH http://localhost:9090/api/v1/quotes/calculate/{{quoteReference}}
+Content-Type: application/json
+
+###
+# @name sign quote
+PATCH http://localhost:9090/api/v1/quotes/sign/{{quoteReference}}/signature/testSignature
+Content-Type: application/json
+
+###
+
+###
+# @name sign: REJECTED_BKR_REGISTRATION
+PATCH http://localhost:9090/api/v1/quotes/sign/{{quoteReference}}/signature/testSignature
+Content-Type: application/json
+
+###

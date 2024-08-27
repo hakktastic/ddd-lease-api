@@ -11,17 +11,19 @@ spring:
     moments:
       enable-time-machine: true
       granularity: hours
+  docker:
+    compose:
+      enabled: true
+      file: compose.yaml
+      lifecycle-management: start_and_stop
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: admin
     password: secret
   jpa:
-    generate-ddl: true
     show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        ddl-auto: create-drop
+    hibernate:
+      ddl-auto: create
   endpoint:
     modulith:
       enabled: true
@@ -32,6 +34,7 @@ spring:
 
 logging:
   level:
-    org.springframework.modulith: DEBUG
+    org.springframework.modulith: INFO
     org.springframework.data.jdbc: DEBUG
-    org.hibernate: DEBUG
+    org.hibernate: WARN
+    nl.svb.dms.ddd_lease_api: DEBUG

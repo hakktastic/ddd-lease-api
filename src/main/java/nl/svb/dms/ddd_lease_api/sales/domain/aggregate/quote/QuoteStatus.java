@@ -1,5 +1,12 @@
 package nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote;
 
 public enum QuoteStatus {
-    FILLED_OUT, CALCULATED, SIGNED, REJECTED_MIN_AGE, REJECTED_INCOME
+    CREATED,
+    FILLED_OUT,
+    CALCULATED,
+    SIGNED,
+    REJECTED_MIN_AGE,
+    REJECTED_MAX_PERCENTAGE_OF_YEARLY_INCOME,
+    REJECTED_BKR_REGISTRATION,
+    REJECTED_MIN_INCOME
 }
