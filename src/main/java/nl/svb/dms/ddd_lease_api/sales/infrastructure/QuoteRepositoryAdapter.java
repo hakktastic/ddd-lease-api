@@ -11,7 +11,6 @@ import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEvent;
-import nl.svb.dms.ddd_lease_api.sales.infrastructure.event.SpringEventQuoteFilledOut;
 import nl.svb.dms.ddd_lease_api.sales.infrastructure.jpa.QuoteJpaEntity;
 import nl.svb.dms.ddd_lease_api.sales.infrastructure.jpa.QuoteJpaRepository;
 import org.springframework.context.ApplicationEventPublisher;
@@ -64,8 +63,7 @@ class QuoteRepositoryAdapter implements QuoteDomainRepository {
     @Override
     public void publish(QuoteFilledOutEvent quoteFilledOutEvent) {
         logPublishEvent(quoteFilledOutEvent);
-        final var quoteReference = quoteFilledOutEvent.getQuote().getQuoteReference();
-        applicationEventPublisher.publishEvent(new SpringEventQuoteFilledOut(quoteFilledOutEvent, quoteReference));
+        applicationEventPublisher.publishEvent(quoteFilledOutEvent);
     }
 
     @Override
