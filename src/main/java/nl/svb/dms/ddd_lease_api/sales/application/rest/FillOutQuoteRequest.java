@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-public record FillOutQuoteRequest(
+record FillOutQuoteRequest(
         @Min(0)
         Long leaseDuration,
         @Min(0)

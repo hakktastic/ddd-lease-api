@@ -19,7 +19,7 @@ class QuoteRestController {
     private final QuoteService quoteService;
 
     @PostMapping
-    public ResponseEntity<QuoteResponse> fillOutQuote(@Valid @RequestBody FillOutQuoteRequest request) throws QuoteNotFoundException {
+    ResponseEntity<QuoteResponse> fillOutQuote(@Valid @RequestBody FillOutQuoteRequest request) throws QuoteNotFoundException {
 
         log.debug("received FillOutQuoteRequest: {}", request);
 
@@ -37,7 +37,7 @@ class QuoteRestController {
     }
 
     @PatchMapping("/calculate/{quoteReference}")
-    public ResponseEntity<QuoteResponse> calculateInstallment(@PathVariable("quoteReference") UUID quoteReference)
+    ResponseEntity<QuoteResponse> calculateInstallment(@PathVariable("quoteReference") UUID quoteReference)
             throws QuoteNotFoundException {
 
         log.debug("received CalculateInstallmentRequest: {}", quoteReference);
@@ -57,8 +57,8 @@ class QuoteRestController {
     }
 
     @PatchMapping("/sign/{quoteReference}/signature/{signature}")
-    public ResponseEntity<QuoteResponse> signQuote(@PathVariable("quoteReference") UUID quoteReference,
-                                                   @PathVariable("signature") String signature)
+    ResponseEntity<QuoteResponse> signQuote(@PathVariable("quoteReference") UUID quoteReference,
+                                            @PathVariable("signature") String signature)
             throws QuoteNotFoundException {
 
         log.debug("received signQuoteRequest for quoteReference: {}, signature: {}",

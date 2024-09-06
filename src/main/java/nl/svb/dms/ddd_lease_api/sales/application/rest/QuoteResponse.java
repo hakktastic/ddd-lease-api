@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatusCode;
 import java.net.URI;
 import java.util.UUID;
 
-public record QuoteResponse(HttpStatusCode httpStatusCode, UUID quoteReference, QuoteStatus quoteStatus, URI uri) {
+record QuoteResponse(HttpStatusCode httpStatusCode, UUID quoteReference, QuoteStatus quoteStatus, URI uri) {
 
-    public static QuoteResponse of(HttpStatusCode httpStatusCode, UUID quoteReference, QuoteStatus quoteStatus, URI uri) {
+    static QuoteResponse of(HttpStatusCode httpStatusCode, UUID quoteReference, QuoteStatus quoteStatus, URI uri) {
         return new QuoteResponse(httpStatusCode, quoteReference, quoteStatus, uri);
     }
 }

@@ -19,11 +19,11 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class QuoteService {
+class QuoteService {
 
     private final QuoteDomainService quoteDomainService;
 
-    public QuoteResponse fillOutQuote(FillOutQuoteRequest request) throws QuoteNotFoundException {
+    QuoteResponse fillOutQuote(FillOutQuoteRequest request) throws QuoteNotFoundException {
 
         final var fillOutQuoteResult = quoteDomainService.fillOut(
                 LeaseDuration.of(request.leaseDuration()),
@@ -44,7 +44,7 @@ public class QuoteService {
                 createUri(quoteReferenceUUID));
     }
 
-    public QuoteResponse calculateInstallment(UUID quoteReferenceUUID) throws QuoteNotFoundException {
+    QuoteResponse calculateInstallment(UUID quoteReferenceUUID) throws QuoteNotFoundException {
 
         final var quoteReference = QuoteReference.of(quoteReferenceUUID);
         final var calculateInstallmentResult = quoteDomainService.calculateInstallment(quoteReference);
@@ -54,7 +54,7 @@ public class QuoteService {
                 createUri(quoteReferenceUUID));
     }
 
-    public QuoteResponse signQuote(UUID quoteReferenceUUID, String signature) throws QuoteNotFoundException {
+    QuoteResponse signQuote(UUID quoteReferenceUUID, String signature) throws QuoteNotFoundException {
 
         final var quoteReference = QuoteReference.of(quoteReferenceUUID);
         final var customerSignature = CustomerSignature.of(signature);
