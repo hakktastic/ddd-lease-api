@@ -1,4 +1,4 @@
-package nl.svb.dms.ddd_lease_api.sales.infrastructure.event;
+package nl.svb.dms.ddd_lease_api.legal.infrastructure;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-class QuoteEventsListener {
+class ContractEventsListener {
 
     @EventListener
     void handleQuoteFilledOut(QuoteFilledOutEvent event) {
