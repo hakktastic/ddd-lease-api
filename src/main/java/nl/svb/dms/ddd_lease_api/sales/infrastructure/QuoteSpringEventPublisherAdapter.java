@@ -1,4 +1,4 @@
-package nl.svb.dms.ddd_lease_api.sales.infrastructure.event;
+package nl.svb.dms.ddd_lease_api.sales.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

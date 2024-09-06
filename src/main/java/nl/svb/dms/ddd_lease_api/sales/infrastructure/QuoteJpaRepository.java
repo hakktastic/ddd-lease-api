@@ -1,4 +1,4 @@
-package nl.svb.dms.ddd_lease_api.sales.infrastructure.jpa;
+package nl.svb.dms.ddd_lease_api.sales.infrastructure;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

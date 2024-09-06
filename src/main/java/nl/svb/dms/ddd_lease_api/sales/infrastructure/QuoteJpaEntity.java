@@ -1,4 +1,4 @@
-package nl.svb.dms.ddd_lease_api.sales.infrastructure.jpa;
+package nl.svb.dms.ddd_lease_api.sales.infrastructure;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -70,6 +70,7 @@ public class QuoteJpaEntity {
 
         return quoteJpaEntity;
     }
+
 
     public Quote toQuote() {
 
