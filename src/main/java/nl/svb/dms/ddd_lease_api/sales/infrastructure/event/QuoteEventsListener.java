@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class QuoteEventsListener {
+class QuoteEventsListener {
 
     @EventListener
     void handleQuoteFilledOut(QuoteFilledOutEvent event) {

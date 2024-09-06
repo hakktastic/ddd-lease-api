@@ -1,4 +1,4 @@
-package nl.svb.dms.ddd_lease_api.sales.infrastructure;
+package nl.svb.dms.ddd_lease_api.sales.infrastructure.jpa;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -11,9 +11,6 @@ import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEvent;
-import nl.svb.dms.ddd_lease_api.sales.infrastructure.jpa.QuoteJpaEntity;
-import nl.svb.dms.ddd_lease_api.sales.infrastructure.jpa.QuoteJpaRepository;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -21,10 +18,9 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class QuoteRepositoryAdapter implements QuoteDomainRepository {
+class QuoteJpaRepositoryAdapter implements QuoteDomainRepository {
 
     private final QuoteJpaRepository repository;
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public void save(QuoteFilledOutEvent quoteFilledOutEvent) throws QuoteNotFoundException {
@@ -60,23 +56,6 @@ class QuoteRepositoryAdapter implements QuoteDomainRepository {
         repository.save(quoteJpaEntity);
     }
 
-    @Override
-    public void publish(QuoteFilledOutEvent quoteFilledOutEvent) {
-        logPublishEvent(quoteFilledOutEvent);
-        applicationEventPublisher.publishEvent(quoteFilledOutEvent);
-    }
-
-    @Override
-    public void publish(InstallmentCalculatedEvent installmentCalculatedEvent) {
-        logPublishEvent(installmentCalculatedEvent);
-        applicationEventPublisher.publishEvent(installmentCalculatedEvent);
-    }
-
-    @Override
-    public void publish(QuoteSignedEvent quoteSignedEvent) {
-        logPublishEvent(quoteSignedEvent);
-        applicationEventPublisher.publishEvent(quoteSignedEvent);
-    }
 
     public Optional<Quote> findQuoteBy(QuoteReference quoteReference) {
 
@@ -106,9 +85,5 @@ class QuoteRepositoryAdapter implements QuoteDomainRepository {
 
     private void logSaveJpaEntity(QuoteJpaEntity quoteJpaEntity) {
         log.debug("saving jpa entity: {}", quoteJpaEntity);
-    }
-
-    private void logPublishEvent(SalesEvent event) {
-        log.debug("publishing event: {}", event);
     }
 }

@@ -1,5 +1,6 @@
 package nl.svb.dms.ddd_lease_api.sales.infrastructure;
 
+import nl.svb.dms.ddd_lease_api.sales.domain.QuoteDomainEventPublisher;
 import nl.svb.dms.ddd_lease_api.sales.domain.QuoteDomainRepository;
 import nl.svb.dms.ddd_lease_api.sales.domain.QuoteDomainService;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteProvider;
@@ -8,20 +9,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SpringBeanConfiguration {
+class SpringBeanConfiguration {
 
     @Bean
-    public QuoteDomainService quoteDomainService(QuoteProvider quoteProvider, SalesEventVisitor salesEventVisitor) {
+    QuoteDomainService quoteDomainService(QuoteProvider quoteProvider, SalesEventVisitor salesEventVisitor) {
         return new QuoteDomainService(quoteProvider, salesEventVisitor);
     }
 
     @Bean
-    public SalesEventVisitor salesEventVisitor(QuoteDomainRepository quoteDomainRepository) {
-        return SalesEventVisitor.of(quoteDomainRepository);
+    SalesEventVisitor salesEventVisitor(QuoteDomainRepository quoteDomainRepository, QuoteDomainEventPublisher quoteDomainEventPublisher) {
+        return SalesEventVisitor.of(quoteDomainRepository, quoteDomainEventPublisher);
     }
 
     @Bean
-    public QuoteProvider quoteProvider(QuoteDomainRepository quoteDomainRepository) {
+    QuoteProvider quoteProvider(QuoteDomainRepository quoteDomainRepository) {
         return QuoteProvider.of(quoteDomainRepository);
     }
 }

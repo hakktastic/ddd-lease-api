@@ -17,12 +17,6 @@ public interface QuoteDomainRepository {
 
     void save(QuoteSignedEvent quoteSignedEvent);
 
-    void publish(QuoteFilledOutEvent quoteFilledOutEvent);
-
-    void publish(InstallmentCalculatedEvent installmentCalculatedEvent);
-
-    void publish(QuoteSignedEvent quoteSignedEvent);
-
     Optional<Quote> findQuoteBy(QuoteReference quoteReference);
 
     Boolean hasCustomerBkrRegistration(QuoteReference quoteReference);
