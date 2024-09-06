@@ -18,13 +18,15 @@ import nl.svb.dms.ddd_lease_api.sales.domain.command.CalculateInstallmentCommand
 import nl.svb.dms.ddd_lease_api.sales.domain.command.CommandResult;
 import nl.svb.dms.ddd_lease_api.sales.domain.command.FillOutQuoteCommand;
 import nl.svb.dms.ddd_lease_api.sales.domain.command.SignQuoteCommand;
-import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEventVisitor;
+import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEventPublishVisitor;
+import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEventSaveVisitor;
 
 @RequiredArgsConstructor
 public final class QuoteDomainService {
 
     private final QuoteProvider quoteProvider;
-    private final SalesEventVisitor visitor;
+    private final SalesEventSaveVisitor salesEventSaveVisitor;
+    private final SalesEventPublishVisitor salesEventPublishVisitor;
 
     public CommandResult fillOut(LeaseDuration duration, LeaseMileage mileage, CustomerFirstName customerFirstName,
                                  CustomerLastName customerLastName, CustomerEmail customerEmail,
@@ -63,7 +65,8 @@ public final class QuoteDomainService {
         final var event = commandResult.getEvent();
 
         if (event != null) {
-            event.accept(visitor);
+            event.accept(salesEventSaveVisitor);
+            event.accept(salesEventPublishVisitor);
         }
 
         return commandResult;
