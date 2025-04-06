@@ -15,14 +15,18 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeaseDuration;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeaseMileage;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeasePrice;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.quote.QuoteReference;
+import org.jmolecules.ddd.annotation.Entity;
+import org.jmolecules.ddd.annotation.Identity;
 
 @Getter
 @ToString
 @AllArgsConstructor(staticName = "of")
+@Entity
 public class ContractEntity {
 
     public static final Double MIN_REQUIRED_CREDIT_RATING = 80.0;
 
+    @Identity
     private final ContractReference contractReference;
     private final QuoteReference quoteReference;
     private final LeaseDuration leaseDuration;

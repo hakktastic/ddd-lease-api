@@ -10,15 +10,19 @@ import nl.svb.dms.ddd_lease_api.sales.domain.command.*;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
+import org.jmolecules.ddd.annotation.AggregateRoot;
+import org.jmolecules.event.annotation.DomainEventHandler;
 
 @Slf4j
 @Getter
 @ToString
 @AllArgsConstructor(staticName = "of")
+@AggregateRoot
 public final class Quote {
 
     private final QuoteEntity quoteEntity;
 
+    @DomainEventHandler
     public CommandResult handleCommand(final FillOutQuoteCommand fillOutQuoteCommand) {
 
         logCommand(fillOutQuoteCommand);
@@ -34,6 +38,7 @@ public final class Quote {
         return fillOutQuote();
     }
 
+    @DomainEventHandler
     public CommandResult handleCommand(final CalculateInstallmentCommand calculateInstallmentCommand) {
 
         logCommand(calculateInstallmentCommand);
@@ -46,6 +51,7 @@ public final class Quote {
         return calculateInstallmentForQuote();
     }
 
+    @DomainEventHandler
     public CommandResult handleCommand(final SignQuoteCommand signQuoteCommand, Boolean hasCustomerBkrRegistration) {
 
         logCommand(signQuoteCommand);

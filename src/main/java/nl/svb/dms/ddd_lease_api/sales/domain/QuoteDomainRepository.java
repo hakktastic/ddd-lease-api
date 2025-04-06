@@ -6,9 +6,13 @@ import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteReference;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
+import org.jmolecules.architecture.hexagonal.Port;
+import org.jmolecules.ddd.annotation.Repository;
 
 import java.util.Optional;
 
+@Port
+@Repository
 public interface QuoteDomainRepository {
 
     void save(QuoteFilledOutEvent quoteFilledOutEvent) throws QuoteNotFoundException;

@@ -1,5 +1,8 @@
 package nl.svb.dms.ddd_lease_api.legal.domain.aggregate.car;
 
+import org.jmolecules.ddd.annotation.ValueObject;
+
+@ValueObject
 public record CarCatalogPrice(Double carCatalogPrice) {
 
     public static CarCatalogPrice of(Double carCatalogPrice) {

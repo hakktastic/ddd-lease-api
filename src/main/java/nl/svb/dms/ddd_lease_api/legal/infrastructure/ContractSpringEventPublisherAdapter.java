@@ -6,12 +6,14 @@ import nl.svb.dms.ddd_lease_api.legal.domain.ContractDomainEventPublisher;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractSignedEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
+import org.jmolecules.architecture.hexagonal.Adapter;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@Adapter
 public class ContractSpringEventPublisherAdapter implements ContractDomainEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;

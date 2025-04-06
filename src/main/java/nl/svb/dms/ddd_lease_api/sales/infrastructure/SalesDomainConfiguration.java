@@ -9,8 +9,11 @@ import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEventSaveVisitor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration to include necessary Ports so that Adapters can use them in Spring context.
+ */
 @Configuration
-class SpringBeanConfiguration {
+class SalesDomainConfiguration {
 
     @Bean
     QuoteDomainService quoteDomainService(QuoteProvider quoteProvider, SalesEventSaveVisitor saveSalesEventVisitor,

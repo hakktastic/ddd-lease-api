@@ -11,6 +11,7 @@ import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEvent;
+import org.jmolecules.architecture.hexagonal.Adapter;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -18,12 +19,13 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@Adapter
 class QuoteJpaRepositoryAdapter implements QuoteDomainRepository {
 
     private final QuoteJpaRepository repository;
 
     @Override
-    public void save(QuoteFilledOutEvent quoteFilledOutEvent) throws QuoteNotFoundException {
+    public void save(QuoteFilledOutEvent quoteFilledOutEvent) {
 
         logSaveEvent(quoteFilledOutEvent);
         final var quoteJpaEntity = QuoteJpaEntity.from(quoteFilledOutEvent.getQuote());

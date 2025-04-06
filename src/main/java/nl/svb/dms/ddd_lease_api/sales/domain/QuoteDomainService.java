@@ -20,7 +20,9 @@ import nl.svb.dms.ddd_lease_api.sales.domain.command.FillOutQuoteCommand;
 import nl.svb.dms.ddd_lease_api.sales.domain.command.SignQuoteCommand;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEventPublishVisitor;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEventSaveVisitor;
+import org.jmolecules.ddd.annotation.Service;
 
+@Service
 @RequiredArgsConstructor
 public final class QuoteDomainService {
 

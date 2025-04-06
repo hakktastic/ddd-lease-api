@@ -23,7 +23,7 @@ class DddLeaseApiApplicationTests {
     @Test
     void verifyModules() {
 
-        modules.forEach(applicationModule -> log.info("Module: '{}', package: '{}'", applicationModule.getName(),
+        modules.forEach(applicationModule -> log.info("Module: '{}', package: '{}'", applicationModule.getIdentifier(),
             applicationModule.getBasePackage()));
 
         modules.verify();

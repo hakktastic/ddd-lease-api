@@ -5,9 +5,13 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractReferenc
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractSignedEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
+import org.jmolecules.architecture.hexagonal.Port;
+import org.jmolecules.ddd.annotation.Repository;
 
 import java.util.Optional;
 
+@Port
+@Repository
 public interface ContractDomainRepository {
 
     void save(ContractFilledOutEvent contractFilledOutEvent);

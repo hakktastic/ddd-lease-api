@@ -7,12 +7,14 @@ import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEvent;
+import org.jmolecules.architecture.hexagonal.Adapter;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@Adapter
 class QuoteSpringEventPublisherAdapter implements QuoteDomainEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;

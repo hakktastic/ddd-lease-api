@@ -8,6 +8,7 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractReferenc
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractSignedEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
+import org.jmolecules.architecture.hexagonal.Adapter;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@Adapter
 public class ContractJpaRepositoryAdapter implements ContractDomainRepository {
 
 

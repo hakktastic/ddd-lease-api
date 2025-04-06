@@ -13,6 +13,8 @@ import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.lease.LeaseMileage;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.lease.LeasePrice;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteReference;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteStatus;
+import org.jmolecules.ddd.annotation.Entity;
+import org.jmolecules.ddd.annotation.Identity;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -20,6 +22,7 @@ import java.time.Period;
 @Getter
 @ToString
 @AllArgsConstructor(staticName = "of")
+@Entity
 public class QuoteEntity {
 
     public static final int MAX_ALLOWED_PERCENTAGE_OF_YEARLY_INCOME = 10;
@@ -27,6 +30,7 @@ public class QuoteEntity {
     private static final Integer MINIMUM_REQUIRED_AGE = 24;
     private static final Double MINIMUM_YEARLY_WELFARE_INCOME = 12000.00;
 
+    @Identity
     private final QuoteReference quoteReference;
     private final LeaseDuration leaseDuration;
     private final LeaseMileage leaseMileage;

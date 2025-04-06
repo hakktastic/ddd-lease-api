@@ -21,8 +21,10 @@ import nl.svb.dms.ddd_lease_api.legal.domain.command.LegalCommandResult;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.SignContractCommand;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.LegalEventPublishVisitor;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.LegalEventSaveVisitor;
+import org.jmolecules.ddd.annotation.Service;
 
 @RequiredArgsConstructor
+@Service
 public class ContractDomainService {
 
     private final ContractProvider contractProvider;

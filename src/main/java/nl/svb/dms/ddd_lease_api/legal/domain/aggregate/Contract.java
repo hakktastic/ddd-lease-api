@@ -9,21 +9,26 @@ import nl.svb.dms.ddd_lease_api.legal.domain.command.*;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractSignedEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
+import org.jmolecules.ddd.annotation.AggregateRoot;
+import org.jmolecules.event.annotation.DomainEventHandler;
 
 @Slf4j
 @Getter
 @ToString
 @AllArgsConstructor(staticName = "of")
+@AggregateRoot
 public class Contract {
 
     private final ContractEntity contractEntity;
 
+    @DomainEventHandler
     public LegalCommandResult handleCommand(FillOutContractCommand fillOutContractCommand) {
 
         logCommand(fillOutContractCommand);
         return fillOutContract();
     }
 
+    @DomainEventHandler
     public LegalCommandResult handleCommand(SignContractCommand signContractCommand) {
 
         logCommand(signContractCommand);
@@ -31,6 +36,7 @@ public class Contract {
         return signContract();
     }
 
+    @DomainEventHandler
     public LegalCommandResult handleCommand(CheckCreditRatingCommand checkCreditRatingCommand) {
 
         logCommand(checkCreditRatingCommand);
