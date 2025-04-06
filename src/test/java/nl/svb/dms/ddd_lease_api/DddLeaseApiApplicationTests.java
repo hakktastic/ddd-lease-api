@@ -27,8 +27,6 @@ class DddLeaseApiApplicationTests {
             applicationModule.getBasePackage()));
 
         modules.verify();
-
-
     }
 
     @Test

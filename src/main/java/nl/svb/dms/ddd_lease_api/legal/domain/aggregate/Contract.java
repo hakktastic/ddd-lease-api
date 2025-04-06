@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractReference;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractStatus;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.*;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractSignedEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
 import org.jmolecules.ddd.annotation.AggregateRoot;
+import org.jmolecules.ddd.annotation.Identity;
 import org.jmolecules.event.annotation.DomainEventHandler;
 
 @Slf4j
@@ -19,6 +21,9 @@ import org.jmolecules.event.annotation.DomainEventHandler;
 @AggregateRoot
 public class Contract {
 
+    @Identity
+    private final ContractReference contractReference;
+    
     private final ContractEntity contractEntity;
 
     @DomainEventHandler

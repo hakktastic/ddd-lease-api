@@ -35,7 +35,7 @@ public final class QuoteDomainService {
                                  CustomerBirthDate customerBirthDate, CustomerYearlyIncome customerYearlyIncome,
                                  CarBrand brandName, CarModel model, CarCatalogPrice carCatalogPrice) throws QuoteNotFoundException {
 
-        final var quote = Quote.of(QuoteEntity.of(QuoteReference.of(), duration, mileage, customerFirstName,
+        final var quote = Quote.of(QuoteReference.of(), QuoteEntity.of(duration, mileage, customerFirstName,
                 customerLastName, customerEmail, customerBirthDate, customerYearlyIncome, brandName, model,
                 carCatalogPrice, LeasePrice.of(0.0), CustomerHasBkrRegistration.of(Boolean.FALSE),
                 QuoteStatus.CREATED));

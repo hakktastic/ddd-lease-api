@@ -11,6 +11,7 @@ import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
 import org.jmolecules.ddd.annotation.AggregateRoot;
+import org.jmolecules.ddd.annotation.Identity;
 import org.jmolecules.event.annotation.DomainEventHandler;
 
 @Slf4j
@@ -20,6 +21,9 @@ import org.jmolecules.event.annotation.DomainEventHandler;
 @AggregateRoot
 public final class Quote {
 
+    @Identity
+    private final QuoteReference quoteReference;
+    
     private final QuoteEntity quoteEntity;
 
     @DomainEventHandler
@@ -62,10 +66,6 @@ public final class Quote {
         }
 
         return signQuote();
-    }
-
-    public QuoteReference getQuoteReference() {
-        return quoteEntity.getQuoteReference();
     }
 
     private CommandResult fillOutQuote() {

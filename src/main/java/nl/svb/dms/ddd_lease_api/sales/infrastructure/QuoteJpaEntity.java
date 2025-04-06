@@ -53,6 +53,7 @@ public class QuoteJpaEntity {
         final var quoteEntity = quote.getQuoteEntity();
         final var quoteJpaEntity = new QuoteJpaEntity();
 
+        quoteJpaEntity.setQuoteReference(quote.getQuoteReference().quoteReference());
         quoteJpaEntity.setLeaseDuration(quoteEntity.getLeaseDuration().leaseDuration());
         quoteJpaEntity.setLeaseMileage(quoteEntity.getLeaseMileage().leaseMileage());
         quoteJpaEntity.setCustomerFirstName(quoteEntity.getCustomerFirstName().customerFirstName());
@@ -63,7 +64,6 @@ public class QuoteJpaEntity {
         quoteJpaEntity.setCarBrandName(quoteEntity.getCarBrand().carBrand());
         quoteJpaEntity.setCarModel(quoteEntity.getCarModel().carModel());
         quoteJpaEntity.setCarCatalogPrice(quoteEntity.getCarCatalogPrice().carCatalogPrice());
-        quoteJpaEntity.setQuoteReference(quoteEntity.getQuoteReference().quoteReference());
         quoteJpaEntity.setLeasePrice(quoteEntity.getLeasePrice().leasePrice());
         quoteJpaEntity.setCustomerHasBkrRegistration(quoteEntity.hasCustomerBkrRegistration());
         quoteJpaEntity.setQuoteStatus(quoteEntity.getQuoteStatus());
@@ -74,9 +74,8 @@ public class QuoteJpaEntity {
 
     public Quote toQuote() {
 
-        return Quote.of(
+        return Quote.of(QuoteReference.of(this.quoteReference),
                 QuoteEntity.of(
-                        QuoteReference.of(this.quoteReference),
                         LeaseDuration.of(this.leaseDuration),
                         LeaseMileage.of(this.leaseMileage),
                         CustomerFirstName.of(this.customerFirstName),

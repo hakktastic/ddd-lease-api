@@ -55,9 +55,8 @@ public class ContractJpaEntity {
 
     public Contract toContract() {
 
-        return Contract.of(
+        return Contract.of(ContractReference.of(this.contractReference),
                 ContractEntity.of(
-                        ContractReference.of(this.contractReference),
                         QuoteReference.of(this.quoteReference),
                         LeaseDuration.of(this.leaseDuration),
                         LeaseMileage.of(this.leaseMileage),
@@ -82,7 +81,7 @@ public class ContractJpaEntity {
         final var contractDomainEntity = contract.getContractEntity();
 
         final var contractJpaEntity = new ContractJpaEntity();
-        contractJpaEntity.setContractReference(contractDomainEntity.getContractReference().contractReference());
+        contractJpaEntity.setContractReference(contract.getContractReference().contractReference());
         contractJpaEntity.setQuoteReference(contractDomainEntity.getQuoteReference().quoteReference());
         contractJpaEntity.setContractStatus(contractDomainEntity.getContractStatus());
         contractJpaEntity.setCreditRating(contractDomainEntity.getCreditRating().creditRating());

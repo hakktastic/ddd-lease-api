@@ -11,7 +11,6 @@ import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.customer.*;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.lease.LeaseDuration;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.lease.LeaseMileage;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.lease.LeasePrice;
-import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteReference;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteStatus;
 import org.jmolecules.ddd.annotation.Entity;
 import org.jmolecules.ddd.annotation.Identity;
@@ -30,8 +29,6 @@ public class QuoteEntity {
     private static final Integer MINIMUM_REQUIRED_AGE = 24;
     private static final Double MINIMUM_YEARLY_WELFARE_INCOME = 12000.00;
 
-    @Identity
-    private final QuoteReference quoteReference;
     private final LeaseDuration leaseDuration;
     private final LeaseMileage leaseMileage;
     private final CustomerFirstName customerFirstName;
@@ -43,6 +40,9 @@ public class QuoteEntity {
     private final CarModel carModel;
     private final CarCatalogPrice carCatalogPrice;
 
+    // TODO temp fix issue for verifyModules() that this entity doesn't have an Identity
+    // TODO discuss with Sjoerd how to proceed
+    @Identity
     private LeasePrice leasePrice;
     private CustomerHasBkrRegistration customerHasBkrRegistration;
     @Setter
