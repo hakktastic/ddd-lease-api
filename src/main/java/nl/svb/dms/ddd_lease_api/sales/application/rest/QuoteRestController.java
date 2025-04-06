@@ -23,7 +23,7 @@ class QuoteRestController {
 
         log.debug("received FillOutQuoteRequest: {}", request);
 
-        final var fillOutQuoteResponse = quoteService.fillOutQuote(request);
+        final var fillOutQuoteResponse = QuoteResponse.from(quoteService.fillOutQuote(request));
 
         log.debug("Returning FillOutQuoteResponse: {}", fillOutQuoteResponse);
 
@@ -42,7 +42,7 @@ class QuoteRestController {
 
         log.debug("received CalculateInstallmentRequest: {}", quoteReference);
 
-        final var installmentCalculatedResponse = quoteService.calculateInstallment(quoteReference);
+        final var installmentCalculatedResponse = QuoteResponse.from(quoteService.calculateInstallment(quoteReference));
 
         log.debug("Returning CalculateInstallmentResponse: {}", installmentCalculatedResponse);
 
@@ -64,7 +64,7 @@ class QuoteRestController {
         log.debug("received signQuoteRequest for quoteReference: {}, signature: {}",
                 quoteReference, signature);
 
-        final var signQuoteResponse = quoteService.signQuote(quoteReference, signature);
+        final var signQuoteResponse = QuoteResponse.from(quoteService.signQuote(quoteReference, signature));
 
         log.debug("Returning signQuoteResponse: {}", signQuoteResponse);
 
