@@ -76,6 +76,7 @@ public class QuoteJpaEntity {
 
         return Quote.of(QuoteReference.of(this.quoteReference),
                 QuoteEntity.of(
+                        QuoteReference.of(this.quoteReference),
                         LeaseDuration.of(this.leaseDuration),
                         LeaseMileage.of(this.leaseMileage),
                         CustomerFirstName.of(this.customerFirstName),
