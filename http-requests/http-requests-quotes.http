@@ -16,6 +16,27 @@ Content-Type: application/json
   "carCatalogPrice": 65000
 }
 
+> {%
+
+
+// extract quoteReference from response JSON
+client.global.set("quoteReference", response.body.quoteReference);
+
+
+
+%}
+###
+
+###
+# @name calculate installment
+PATCH http://localhost:9090/api/v1/quotes/calculate/{{quoteReference}}
+Content-Type: application/json
+
+###
+# @name sign quote
+PATCH http://localhost:9090/api/v1/quotes/sign/{{quoteReference}}/signature/testSignature
+Content-Type: application/json
+
 ###
 
 # @name fill out: REJECTED_MIN_AGE
@@ -53,19 +74,6 @@ Content-Type: application/json
   "carModel": "Polo",
   "carCatalogPrice": 25000
 }
-
-###
-@quoteReference = 1886d8e0-0190-4d93-8882-99ae5cddfa8a
-# @name calculate installment
-PATCH http://localhost:9090/api/v1/quotes/calculate/{{quoteReference}}
-Content-Type: application/json
-
-###
-# @name sign quote
-PATCH http://localhost:9090/api/v1/quotes/sign/{{quoteReference}}/signature/testSignature
-Content-Type: application/json
-
-###
 
 ###
 # @name sign: REJECTED_BKR_REGISTRATION
