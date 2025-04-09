@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ContractJpaRepository extends CrudRepository<ContractJpaEntity, Long> {
+interface ContractJpaRepository extends CrudRepository<ContractJpaEntity, Long> {
 
     Optional<ContractJpaEntity> findByContractReference(UUID contractReference);
 }

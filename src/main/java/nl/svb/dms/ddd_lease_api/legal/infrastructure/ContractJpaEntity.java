@@ -25,7 +25,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @Entity(name = "contract")
-public class ContractJpaEntity {
+class ContractJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +52,7 @@ public class ContractJpaEntity {
     private String carModel;
     private Double carCatalogPrice;
 
-    public static ContractJpaEntity from(Contract contract) {
+    static ContractJpaEntity from(Contract contract) {
 
         final var contractDomainEntity = contract.getContractEntity();
 
@@ -77,7 +77,7 @@ public class ContractJpaEntity {
         return contractJpaEntity;
     }
 
-    public Contract toContract() {
+    Contract toContract() {
 
         return Contract.of(ContractReference.of(this.contractReference),
                 ContractEntity.of(

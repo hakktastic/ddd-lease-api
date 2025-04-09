@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 @RequiredArgsConstructor
 @Adapter
-public class ContractJpaRepositoryAdapter implements ContractDomainRepository {
+class ContractJpaRepositoryAdapter implements ContractDomainRepository {
 
     private final ContractJpaRepository repository;
 

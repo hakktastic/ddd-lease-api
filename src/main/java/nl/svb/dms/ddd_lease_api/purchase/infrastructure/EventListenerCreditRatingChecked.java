@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class EventListenerCreditRatingChecked {
+class EventListenerCreditRatingChecked {
 
     @EventListener
     void on(SpringCreditRatingCheckedEvent creditRatingCheckedEvent) {

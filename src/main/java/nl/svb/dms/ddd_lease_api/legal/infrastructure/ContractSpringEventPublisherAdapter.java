@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Adapter
-public class ContractSpringEventPublisherAdapter implements ContractDomainEventPublisher {
+class ContractSpringEventPublisherAdapter implements ContractDomainEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 

@@ -23,7 +23,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @Entity(name = "quote")
-public class QuoteJpaEntity {
+class QuoteJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +48,7 @@ public class QuoteJpaEntity {
     private String carModel;
     private Double carCatalogPrice;
 
-    public static QuoteJpaEntity from(Quote quote) {
+    static QuoteJpaEntity from(Quote quote) {
 
         final var quoteEntity = quote.getQuoteEntity();
         final var quoteJpaEntity = new QuoteJpaEntity();
@@ -72,7 +72,7 @@ public class QuoteJpaEntity {
     }
 
 
-    public Quote toQuote() {
+    Quote toQuote() {
 
         return Quote.of(QuoteReference.of(this.quoteReference),
                 QuoteEntity.of(
