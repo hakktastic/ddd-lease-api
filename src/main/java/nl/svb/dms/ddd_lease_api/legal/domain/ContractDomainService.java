@@ -18,7 +18,6 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.quote.QuoteReference;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.CheckCreditRatingCommand;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.FillOutContractCommand;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.LegalCommandResult;
-import nl.svb.dms.ddd_lease_api.legal.domain.command.SignContractCommand;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.LegalEventPublishVisitor;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.LegalEventSaveVisitor;
 import org.jmolecules.ddd.annotation.Service;
@@ -36,25 +35,16 @@ public class ContractDomainService {
                                       CustomerLastName customerLastName, CustomerEmail customerEmail,
                                       CustomerBirthDate customerBirthDate, CustomerYearlyIncome customerYearlyIncome,
                                       CarBrand brandName, CarModel model, CarCatalogPrice carCatalogPrice,
-                                      LeasePrice leasePrice, QuoteReference quoteReference, CustomerSignature customerSignature) {
+                                      LeasePrice leasePrice, QuoteReference quoteReference) {
 
         final var contract = Contract.of(ContractReference.of(), ContractEntity.of(quoteReference, duration, mileage,
                 customerFirstName, customerLastName, customerEmail, customerBirthDate, customerYearlyIncome, brandName,
-                model, carCatalogPrice, leasePrice, customerSignature, ContractStatus.CREATED, CreditRating.of(0.0)));
+                model, carCatalogPrice, leasePrice, ContractStatus.CREATED, CreditRating.of(0.0)));
 
         final var fillOutContractResult = contract.handleCommand(FillOutContractCommand.of(
                 contract.getContractReference()));
 
         return acceptLegalEventVisitor(fillOutContractResult);
-    }
-
-    public LegalCommandResult sign(ContractReference contractReference, CustomerSignature customerSignature) {
-
-        final var contract = contractProvider.findContract(contractReference);
-        final var signContractResult = contract.handleCommand(SignContractCommand.of(contractReference,
-                customerSignature));
-
-        return acceptLegalEventVisitor(signContractResult);
     }
 
     public LegalCommandResult checkCreditRating(ContractReference contractReference) {

@@ -14,11 +14,6 @@ public class LegalEventPublishVisitor implements LegalVisitor {
     }
 
     @Override
-    public void visit(ContractSignedEvent contractSignedEvent) {
-        publisher.publish(contractSignedEvent);
-    }
-
-    @Override
     public void visit(CreditRatingCheckedEvent creditRatingCheckedEvent) {
         publisher.publish(creditRatingCheckedEvent);
     }

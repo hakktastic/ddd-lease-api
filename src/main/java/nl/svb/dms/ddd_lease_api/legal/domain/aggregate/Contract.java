@@ -6,9 +6,11 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractReference;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractStatus;
-import nl.svb.dms.ddd_lease_api.legal.domain.command.*;
+import nl.svb.dms.ddd_lease_api.legal.domain.command.CheckCreditRatingCommand;
+import nl.svb.dms.ddd_lease_api.legal.domain.command.FillOutContractCommand;
+import nl.svb.dms.ddd_lease_api.legal.domain.command.LegalCommand;
+import nl.svb.dms.ddd_lease_api.legal.domain.command.LegalCommandResult;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
-import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractSignedEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.Identity;
@@ -34,14 +36,6 @@ public class Contract {
     }
 
     @DomainEventHandler
-    public LegalCommandResult handleCommand(SignContractCommand signContractCommand) {
-
-        logCommand(signContractCommand);
-        contractEntity.addCustomerSignature(signContractCommand.getCustomerSignature());
-        return signContract();
-    }
-
-    @DomainEventHandler
     public LegalCommandResult handleCommand(CheckCreditRatingCommand checkCreditRatingCommand) {
 
         logCommand(checkCreditRatingCommand);
@@ -62,11 +56,6 @@ public class Contract {
     private LegalCommandResult fillOutContract() {
         contractEntity.setContractStatus(ContractStatus.FILLED_OUT);
         return LegalCommandResult.of(this, ContractStatus.FILLED_OUT, new ContractFilledOutEvent(this));
-    }
-
-    private LegalCommandResult signContract() {
-        contractEntity.setContractStatus(ContractStatus.SIGNED);
-        return LegalCommandResult.of(this, ContractStatus.SIGNED, new ContractSignedEvent(this));
     }
 
     private LegalCommandResult checkCreditRating() {

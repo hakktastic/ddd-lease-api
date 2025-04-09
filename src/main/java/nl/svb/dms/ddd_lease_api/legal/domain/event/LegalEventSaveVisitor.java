@@ -14,11 +14,6 @@ public class LegalEventSaveVisitor implements LegalVisitor {
     }
 
     @Override
-    public void visit(ContractSignedEvent contractSignedEvent) {
-        contractDomainRepository.save(contractSignedEvent);
-    }
-
-    @Override
     public void visit(CreditRatingCheckedEvent creditRatingCheckedEvent) {
         contractDomainRepository.save(creditRatingCheckedEvent);
     }

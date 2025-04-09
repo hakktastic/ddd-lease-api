@@ -39,7 +39,7 @@ public class ContractEntity {
     private final CarModel carModel;
     private final CarCatalogPrice carCatalogPrice;
     private final LeasePrice leasePrice;
-    private CustomerSignature customerSignature;
+
     @Setter
     private ContractStatus contractStatus;
     private CreditRating creditRating;
@@ -47,10 +47,7 @@ public class ContractEntity {
     public void addCreditRating(CreditRating creditRating) {
         this.creditRating = creditRating;
     }
-    
-    public void addCustomerSignature(CustomerSignature customerSignature) {
-        this.customerSignature = customerSignature;
-    }
+
 
     public Boolean hasCustomerValidCreditRating() {
         return this.creditRating.creditRating() >= MIN_REQUIRED_CREDIT_RATING;

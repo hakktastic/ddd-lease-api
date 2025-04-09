@@ -12,9 +12,6 @@ public interface LegalVisitor {
     @DomainEventPublisher(publishes = "Event that is published when a Contract is filled out", type = DomainEventPublisher.PublisherType.INTERNAL)
     void visit(ContractFilledOutEvent contractFilledOutEvent);
 
-    @DomainEventPublisher(publishes = "Event that is published when a Contract is signed", type = DomainEventPublisher.PublisherType.INTERNAL)
-    void visit(ContractSignedEvent contractSignedEvent);
-
     @DomainEventPublisher(publishes = "Event that is published when a Contract Credit Rating is checked", type = DomainEventPublisher.PublisherType.INTERNAL)
     void visit(CreditRatingCheckedEvent creditRatingCheckedEvent);
 }

@@ -46,7 +46,6 @@ public class ContractJpaEntity {
     private String customerEmail;
     private LocalDate customerBirthDate;
     private Double customerYearlyIncome;
-    private String customerSignature;
 
     // TODO create new JPA entity for car
     private String carBrandName;
@@ -69,14 +68,13 @@ public class ContractJpaEntity {
                         CarModel.of(this.carModel),
                         CarCatalogPrice.of(this.carCatalogPrice),
                         LeasePrice.of(this.leasePrice),
-                        CustomerSignature.of(this.customerSignature),
                         this.contractStatus,
                         CreditRating.of(this.creditRating)
                 )
         );
     }
 
-    public ContractJpaEntity from(Contract contract) {
+    public static ContractJpaEntity from(Contract contract) {
 
         final var contractDomainEntity = contract.getContractEntity();
 
@@ -94,7 +92,6 @@ public class ContractJpaEntity {
         contractJpaEntity.setCustomerBirthDate(contractDomainEntity.getCustomerBirthDate().customerBirthDate());
         contractJpaEntity.setCustomerBirthDate(contractDomainEntity.getCustomerBirthDate().customerBirthDate());
         contractJpaEntity.setCustomerYearlyIncome(contractDomainEntity.getCustomerYearlyIncome().customerYearlyIncome());
-        contractJpaEntity.setCustomerSignature(contractDomainEntity.getCustomerSignature().customerSignature());
         contractJpaEntity.setCarBrandName(contractDomainEntity.getCarBrand().carBrand());
         contractJpaEntity.setCarModel(contractDomainEntity.getCarModel().carModel());
         contractJpaEntity.setCarCatalogPrice(contractDomainEntity.getCarCatalogPrice().carCatalogPrice());

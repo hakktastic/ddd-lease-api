@@ -10,6 +10,6 @@ public class ContractProvider {
     private final ContractDomainRepository contractDomainRepository;
 
     public Contract findContract(ContractReference contractReference) {
-        return contractDomainRepository.findQuoteBy(contractReference).orElse(null);
+        return contractDomainRepository.findContractBy(contractReference).orElse(null);
     }
 }

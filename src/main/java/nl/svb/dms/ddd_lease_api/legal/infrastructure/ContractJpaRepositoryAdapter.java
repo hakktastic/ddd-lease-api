@@ -1,17 +1,19 @@
 package nl.svb.dms.ddd_lease_api.legal.infrastructure;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import nl.svb.dms.ddd_lease_api.legal.domain.ContractDomainRepository;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.Contract;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractReference;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
-import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractSignedEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
+import nl.svb.dms.ddd_lease_api.legal.domain.event.LegalEvent;
 import org.jmolecules.architecture.hexagonal.Adapter;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Component
@@ -19,29 +21,63 @@ import java.util.Optional;
 @Adapter
 public class ContractJpaRepositoryAdapter implements ContractDomainRepository {
 
+    private final ContractJpaRepository repository;
 
     @Override
     public void save(ContractFilledOutEvent contractFilledOutEvent) {
 
-    }
-
-    @Override
-    public void save(ContractSignedEvent contractSignedEvent) {
-
+        logSaveEvent(contractFilledOutEvent);
+        final var contractJpaEntity = ContractJpaEntity.from(contractFilledOutEvent.getContract());
+        logSaveJpaEntity(contractJpaEntity);
+        repository.save(contractJpaEntity);
     }
 
     @Override
     public void save(CreditRatingCheckedEvent creditRatingCheckedEvent) {
 
+        logSaveEvent(creditRatingCheckedEvent);
+        final var contractReference = creditRatingCheckedEvent.getContract().getContractReference();
+
+        final var contractJpaEntity = findContractJpaEntityBy(contractReference);
+        contractJpaEntity.setContractStatus(creditRatingCheckedEvent.getContract().getContractEntity().getContractStatus());
+        contractJpaEntity.setCreditRating(creditRatingCheckedEvent.getContract().getContractEntity().getCreditRating().creditRating());
+
+        logSaveJpaEntity(contractJpaEntity);
+        repository.save(contractJpaEntity);
+
     }
 
     @Override
-    public Optional<Contract> findQuoteBy(ContractReference contractReference) {
-        return Optional.empty();
+    public Optional<Contract> findContractBy(ContractReference contractReference) {
+
+        final var contractReferenceUUID = contractReference.contractReference();
+        final var optionalContractJpaEntity = repository.findByContractReference(contractReferenceUUID);
+
+        return optionalContractJpaEntity.map(ContractJpaEntity::toContract);
     }
 
     @Override
     public Double getCreditRating(ContractReference contractReference) {
-        return 0.0;
+
+        // just returning a random credit rating
+        // normally should call an external service
+        return ThreadLocalRandom.current().nextDouble(80, 101);
+    }
+
+    @SneakyThrows
+    private ContractJpaEntity findContractJpaEntityBy(ContractReference contractReference) {
+
+        return repository.findByContractReference(contractReference.contractReference())
+                .orElseThrow(() -> new ContractNotFoundException(contractReference));
+    }
+
+    private void logSaveEvent(LegalEvent event) {
+
+        log.debug("saving event: {} ", event);
+    }
+
+    private void logSaveJpaEntity(ContractJpaEntity contractJpaEntity) {
+
+        log.debug("saving jpa entity: {}", contractJpaEntity);
     }
 }
