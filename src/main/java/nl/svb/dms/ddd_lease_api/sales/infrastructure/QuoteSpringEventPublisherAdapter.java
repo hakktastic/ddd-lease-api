@@ -2,6 +2,7 @@ package nl.svb.dms.ddd_lease_api.sales.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.svb.dms.ddd_lease_api.sales.SpringQuoteSignedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.QuoteDomainEventPublisher;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
@@ -33,8 +34,9 @@ class QuoteSpringEventPublisherAdapter implements QuoteDomainEventPublisher {
 
     @Override
     public void publish(QuoteSignedEvent quoteSignedEvent) {
+
         logPublishEvent(quoteSignedEvent);
-        applicationEventPublisher.publishEvent(quoteSignedEvent);
+        applicationEventPublisher.publishEvent(SpringQuoteSignedEvent.from(quoteSignedEvent));
     }
 
     private void logPublishEvent(SalesEvent event) {

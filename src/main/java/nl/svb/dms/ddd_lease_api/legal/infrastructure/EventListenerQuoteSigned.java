@@ -11,7 +11,7 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeaseDuration;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeaseMileage;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeasePrice;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.quote.QuoteReference;
-import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
+import nl.svb.dms.ddd_lease_api.sales.SpringQuoteSignedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -23,25 +23,22 @@ class EventListenerQuoteSigned {
     private final ContractDomainService contractDomainService;
 
     @EventListener
-    void on(QuoteSignedEvent quoteSignedEvent) {
+    void on(SpringQuoteSignedEvent quoteSignedEvent) {
         log.info("Quote signed event received: {}", quoteSignedEvent);
 
-        final var quote = quoteSignedEvent.getQuote();
-        final var quoteEntity = quote.getQuoteEntity();
-
         contractDomainService.fillOut(
-                LeaseDuration.of(quoteEntity.getLeaseDuration().leaseDuration()),
-                LeaseMileage.of(quoteEntity.getLeaseMileage().leaseMileage()),
-                CustomerFirstName.of(quoteEntity.getCustomerFirstName().customerFirstName()),
-                CustomerLastName.of(quoteEntity.getCustomerLastName().customerLastName()),
-                CustomerEmail.of(quoteEntity.getCustomerEmail().customerEmail()),
-                CustomerBirthDate.of(quoteEntity.getCustomerBirthDate().customerBirthDate()),
-                CustomerYearlyIncome.of(quoteEntity.getCustomerYearlyIncome().customerYearlyIncome()),
-                CarBrand.of(quoteEntity.getCarBrand().carBrand()),
-                CarModel.of(quoteEntity.getCarModel().carModel()),
-                CarCatalogPrice.of(quoteEntity.getCarCatalogPrice().carCatalogPrice()),
-                LeasePrice.of(quoteEntity.getLeasePrice().leasePrice()),
-                QuoteReference.of(quoteEntity.getQuoteReference().quoteReference())
+                LeaseDuration.of(quoteSignedEvent.getLeaseDuration()),
+                LeaseMileage.of(quoteSignedEvent.getLeaseMileage()),
+                CustomerFirstName.of(quoteSignedEvent.getCustomerFirstName()),
+                CustomerLastName.of(quoteSignedEvent.getCustomerLastName()),
+                CustomerEmail.of(quoteSignedEvent.getCustomerEmail()),
+                CustomerBirthDate.of(quoteSignedEvent.getCustomerBirthDate()),
+                CustomerYearlyIncome.of(quoteSignedEvent.getCustomerYearlyIncome()),
+                CarBrand.of(quoteSignedEvent.getCarBrand()),
+                CarModel.of(quoteSignedEvent.getCarModel()),
+                CarCatalogPrice.of(quoteSignedEvent.getCarCatalogPrice()),
+                LeasePrice.of(quoteSignedEvent.getLeasePrice()),
+                QuoteReference.of(quoteSignedEvent.getQuoteReference())
         );
     }
 }

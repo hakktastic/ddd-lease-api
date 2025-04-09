@@ -2,6 +2,7 @@ package nl.svb.dms.ddd_lease_api.legal.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.svb.dms.ddd_lease_api.legal.SpringCreditRatingCheckedEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.ContractDomainEventPublisher;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
@@ -27,7 +28,7 @@ public class ContractSpringEventPublisherAdapter implements ContractDomainEventP
     @Override
     public void publish(CreditRatingCheckedEvent creditRatingCheckedEvent) {
         logPublishEvent(creditRatingCheckedEvent);
-        applicationEventPublisher.publishEvent(creditRatingCheckedEvent);
+        applicationEventPublisher.publishEvent(SpringCreditRatingCheckedEvent.from(creditRatingCheckedEvent));
     }
 
     private void logPublishEvent(LegalEvent event) {
