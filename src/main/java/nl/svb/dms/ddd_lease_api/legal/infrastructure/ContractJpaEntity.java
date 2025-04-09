@@ -52,28 +52,6 @@ public class ContractJpaEntity {
     private String carModel;
     private Double carCatalogPrice;
 
-    public Contract toContract() {
-
-        return Contract.of(ContractReference.of(this.contractReference),
-                ContractEntity.of(
-                        QuoteReference.of(this.quoteReference),
-                        LeaseDuration.of(this.leaseDuration),
-                        LeaseMileage.of(this.leaseMileage),
-                        CustomerFirstName.of(this.customerFirstName),
-                        CustomerLastName.of(this.customerLastName),
-                        CustomerEmail.of(this.customerEmail),
-                        CustomerBirthDate.of(this.customerBirthDate),
-                        CustomerYearlyIncome.of(this.customerYearlyIncome),
-                        CarBrand.of(this.carBrandName),
-                        CarModel.of(this.carModel),
-                        CarCatalogPrice.of(this.carCatalogPrice),
-                        LeasePrice.of(this.leasePrice),
-                        this.contractStatus,
-                        CreditRating.of(this.creditRating)
-                )
-        );
-    }
-
     public static ContractJpaEntity from(Contract contract) {
 
         final var contractDomainEntity = contract.getContractEntity();
@@ -97,5 +75,27 @@ public class ContractJpaEntity {
         contractJpaEntity.setCarCatalogPrice(contractDomainEntity.getCarCatalogPrice().carCatalogPrice());
 
         return contractJpaEntity;
+    }
+
+    public Contract toContract() {
+
+        return Contract.of(ContractReference.of(this.contractReference),
+                ContractEntity.of(
+                        QuoteReference.of(this.quoteReference),
+                        LeaseDuration.of(this.leaseDuration),
+                        LeaseMileage.of(this.leaseMileage),
+                        CustomerFirstName.of(this.customerFirstName),
+                        CustomerLastName.of(this.customerLastName),
+                        CustomerEmail.of(this.customerEmail),
+                        CustomerBirthDate.of(this.customerBirthDate),
+                        CustomerYearlyIncome.of(this.customerYearlyIncome),
+                        CarBrand.of(this.carBrandName),
+                        CarModel.of(this.carModel),
+                        CarCatalogPrice.of(this.carCatalogPrice),
+                        LeasePrice.of(this.leasePrice),
+                        this.contractStatus,
+                        CreditRating.of(this.creditRating)
+                )
+        );
     }
 }

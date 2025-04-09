@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class ContractSpringEventPublisherAdapter implements ContractDomainEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
-    
+
     @Override
     public void publish(ContractFilledOutEvent contractFilledOutEvent) {
         logPublishEvent(contractFilledOutEvent);

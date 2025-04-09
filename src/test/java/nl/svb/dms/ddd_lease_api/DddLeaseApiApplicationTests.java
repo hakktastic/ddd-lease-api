@@ -16,7 +16,7 @@ class DddLeaseApiApplicationTests {
     private ApplicationModules modules;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         modules = ApplicationModules.of(DddLeaseApiApplication.class);
     }
 
@@ -24,18 +24,18 @@ class DddLeaseApiApplicationTests {
     void verifyModules() {
 
         modules.forEach(applicationModule -> log.info("Module: '{}', package: '{}'", applicationModule.getIdentifier(),
-            applicationModule.getBasePackage()));
+                applicationModule.getBasePackage()));
 
         modules.verify();
     }
 
     @Test
-    void writeDocumentation(){
+    void writeDocumentation() {
 
         final var documenter = new Documenter(modules).writeDocumentation()
-            .writeModuleCanvases()
-            .writeIndividualModulesAsPlantUml()
-            .writeModulesAsPlantUml();
+                .writeModuleCanvases()
+                .writeIndividualModulesAsPlantUml()
+                .writeModulesAsPlantUml();
 
         assertThat(documenter).isNotNull();
     }

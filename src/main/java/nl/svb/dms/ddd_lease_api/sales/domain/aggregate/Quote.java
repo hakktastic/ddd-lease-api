@@ -23,7 +23,7 @@ public final class Quote {
 
     @Identity
     private final QuoteReference quoteReference;
-    
+
     private final QuoteEntity quoteEntity;
 
     @DomainEventHandler

@@ -25,7 +25,7 @@ public class Contract {
 
     @Identity
     private final ContractReference contractReference;
-    
+
     private final ContractEntity contractEntity;
 
     @DomainEventHandler
