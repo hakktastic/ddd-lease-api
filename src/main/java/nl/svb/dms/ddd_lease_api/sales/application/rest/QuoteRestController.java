@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteNotFoundException;
+import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,12 +69,12 @@ class QuoteRestController {
 
         log.debug("Returning signQuoteResponse: {}", signQuoteResponse);
 
-        return switch (signQuoteResponse.quoteStatus()) {
-            case CALCULATED -> ResponseEntity.noContent()
+        if (signQuoteResponse.quoteStatus() == QuoteStatus.CALCULATED) {
+            return ResponseEntity.noContent()
                     .eTag(signQuoteResponse.uri().getPath())
                     .build();
-            case REJECTED_BKR_REGISTRATION -> ResponseEntity.badRequest().body(signQuoteResponse);
-            default -> ResponseEntity.unprocessableEntity().build();
-        };
+        } else {
+            return ResponseEntity.unprocessableEntity().build();
+        }
     }
 }

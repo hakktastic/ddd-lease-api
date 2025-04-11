@@ -19,12 +19,15 @@ Content-Type: application/json
 > {%
 
 
+
 // extract quoteReference from response JSON
 client.global.set("quoteReference", response.body.quoteReference);
 
 
 
+
 %}
+
 ###
 
 ###
@@ -74,10 +77,5 @@ Content-Type: application/json
   "carModel": "Polo",
   "carCatalogPrice": 25000
 }
-
-###
-# @name sign: REJECTED_BKR_REGISTRATION
-PATCH http://localhost:9090/api/v1/quotes/sign/{{quoteReference}}/signature/testSignature
-Content-Type: application/json
 
 ###
