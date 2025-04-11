@@ -52,10 +52,9 @@ public final class Quote {
     }
 
     @DomainEventHandler
-    public CommandResult handleCommand(final SignQuoteCommand signQuoteCommand, Boolean hasCustomerBkrRegistration) {
+    public CommandResult handleCommand(final SignQuoteCommand signQuoteCommand) {
 
         logCommand(signQuoteCommand);
-        quoteEntity.addBkrRegistrationCheckResult(hasCustomerBkrRegistration);
 
         if (quoteEntity.getCustomerHasBkrRegistration().customerHasBkrRegistration()) {
             return rejectQuote(QuoteStatus.REJECTED_BKR_REGISTRATION);

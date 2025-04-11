@@ -64,12 +64,6 @@ public class QuoteEntity {
         return Period.between(customerBirthDate.customerBirthDate(), LocalDate.now()).getYears();
     }
 
-    // TODO remove bkr check, is something for legal
-    // TODO create own event storming board to reflect your implementation
-    public void addBkrRegistrationCheckResult(Boolean hasCustomerBkrRegistration) {
-        this.customerHasBkrRegistration = CustomerHasBkrRegistration.of(hasCustomerBkrRegistration);
-    }
-
     public Boolean hasCustomerBkrRegistration() {
         return (customerHasBkrRegistration != null) ? customerHasBkrRegistration.customerHasBkrRegistration() : Boolean.FALSE;
     }

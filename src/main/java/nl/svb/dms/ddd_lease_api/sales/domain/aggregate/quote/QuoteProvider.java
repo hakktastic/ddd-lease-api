@@ -13,8 +13,4 @@ public class QuoteProvider {
         return quoteDomainRepository.findQuoteBy(quoteReference)
                 .orElseThrow(() -> new QuoteNotFoundException(quoteReference));
     }
-
-    public Boolean hasCustomerBkrRegistration(QuoteReference quoteReference) {
-        return quoteDomainRepository.hasCustomerBkrRegistration(quoteReference);
-    }
 }

@@ -65,13 +65,6 @@ class QuoteJpaRepositoryAdapter implements QuoteDomainRepository {
         return optionalQuoteJpaEntity.map(QuoteJpaEntity::toQuote);
     }
 
-    @Override
-    public Boolean hasCustomerBkrRegistration(QuoteReference quoteReference) {
-
-        // TODO implementation
-        return false;
-    }
-
     @SneakyThrows
     private QuoteJpaEntity findQuoteJpaEntityBy(QuoteReference quoteReference) {
 

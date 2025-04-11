@@ -54,9 +54,7 @@ public final class QuoteDomainService {
             throws QuoteNotFoundException {
 
         final var quote = quoteProvider.findQuote(quoteReference);
-        final var hasCustomerBkrRegistration = quoteProvider.hasCustomerBkrRegistration(quoteReference);
-        final var signQuoteResult = quote.handleCommand(SignQuoteCommand.of(customerSignature),
-                hasCustomerBkrRegistration);
+        final var signQuoteResult = quote.handleCommand(SignQuoteCommand.of(customerSignature));
         return acceptSalesEventVisitor(signQuoteResult);
 
     }

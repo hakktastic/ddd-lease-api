@@ -18,6 +18,4 @@ public interface QuoteDomainRepository {
     void save(QuoteSignedEvent quoteSignedEvent);
 
     Optional<Quote> findQuoteBy(QuoteReference quoteReference);
-
-    Boolean hasCustomerBkrRegistration(QuoteReference quoteReference);
 }
