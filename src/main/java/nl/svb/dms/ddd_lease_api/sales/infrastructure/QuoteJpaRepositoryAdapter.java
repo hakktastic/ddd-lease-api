@@ -12,11 +12,13 @@ import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Slf4j
 @Component
+@Transactional
 @RequiredArgsConstructor
 class QuoteJpaRepositoryAdapter implements QuoteDomainRepository {
 
