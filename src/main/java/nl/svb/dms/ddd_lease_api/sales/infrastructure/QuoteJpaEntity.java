@@ -34,13 +34,12 @@ class QuoteJpaEntity {
     private Double leasePrice;
     @Enumerated(EnumType.STRING)
     private QuoteStatus quoteStatus;
-    
+
     private String customerFirstName;
     private String customerLastName;
     private String customerEmail;
     private LocalDate customerBirthDate;
     private Double customerYearlyIncome;
-    private Boolean customerHasBkrRegistration;
 
     private String carBrandName;
     private String carModel;
@@ -63,7 +62,6 @@ class QuoteJpaEntity {
         quoteJpaEntity.setCarModel(quoteEntity.getCarModel().carModel());
         quoteJpaEntity.setCarCatalogPrice(quoteEntity.getCarCatalogPrice().carCatalogPrice());
         quoteJpaEntity.setLeasePrice(quoteEntity.getLeasePrice().leasePrice());
-        quoteJpaEntity.setCustomerHasBkrRegistration(quoteEntity.hasCustomerBkrRegistration());
         quoteJpaEntity.setQuoteStatus(quoteEntity.getQuoteStatus());
 
         return quoteJpaEntity;
@@ -86,7 +84,6 @@ class QuoteJpaEntity {
                         CarModel.of(this.carModel),
                         CarCatalogPrice.of(this.carCatalogPrice),
                         LeasePrice.of(this.leasePrice),
-                        CustomerHasBkrRegistration.of(this.customerHasBkrRegistration),
                         this.quoteStatus
                 )
         );

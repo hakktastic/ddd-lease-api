@@ -39,7 +39,7 @@ public class QuoteEntity {
     private final CarModel carModel;
     private final CarCatalogPrice carCatalogPrice;
     private LeasePrice leasePrice;
-    private CustomerHasBkrRegistration customerHasBkrRegistration;
+
     @Setter
     private QuoteStatus quoteStatus;
 
@@ -62,9 +62,5 @@ public class QuoteEntity {
 
     private Integer getCustomerAge() {
         return Period.between(customerBirthDate.customerBirthDate(), LocalDate.now()).getYears();
-    }
-
-    public Boolean hasCustomerBkrRegistration() {
-        return (customerHasBkrRegistration != null) ? customerHasBkrRegistration.customerHasBkrRegistration() : Boolean.FALSE;
     }
 }

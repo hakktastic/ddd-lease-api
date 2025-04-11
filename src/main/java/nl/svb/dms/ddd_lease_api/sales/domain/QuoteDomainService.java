@@ -36,8 +36,7 @@ public final class QuoteDomainService {
         final var quoteReference = QuoteReference.of();
         final var quote = Quote.of(quoteReference, QuoteEntity.of(quoteReference, duration, mileage, customerFirstName,
                 customerLastName, customerEmail, customerBirthDate, customerYearlyIncome, brandName, model,
-                carCatalogPrice, LeasePrice.of(0.0), CustomerHasBkrRegistration.of(Boolean.FALSE),
-                QuoteStatus.CREATED));
+                carCatalogPrice, LeasePrice.of(0.0), QuoteStatus.CREATED));
 
         final var fillOutQuoteResult = quote.handleCommand(FillOutQuoteCommand.of(QuoteReference.of()));
         return acceptSalesEventVisitor(fillOutQuoteResult);

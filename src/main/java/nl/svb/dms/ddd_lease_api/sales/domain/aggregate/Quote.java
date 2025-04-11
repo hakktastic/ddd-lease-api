@@ -56,10 +56,6 @@ public final class Quote {
 
         logCommand(signQuoteCommand);
 
-        if (quoteEntity.getCustomerHasBkrRegistration().customerHasBkrRegistration()) {
-            return rejectQuote(QuoteStatus.REJECTED_BKR_REGISTRATION);
-        }
-
         return signQuote();
     }
 
