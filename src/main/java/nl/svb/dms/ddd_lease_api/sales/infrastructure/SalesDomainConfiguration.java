@@ -15,8 +15,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class SalesDomainConfiguration {
 
-    // TODO is this needed since you're using SpringQuoteSignedEvent
-
     @Bean
     QuoteDomainService quoteDomainService(QuoteProvider quoteProvider, SalesEventSaveVisitor saveSalesEventVisitor,
                                           SalesEventPublishVisitor salesEventPublishVisitor) {
