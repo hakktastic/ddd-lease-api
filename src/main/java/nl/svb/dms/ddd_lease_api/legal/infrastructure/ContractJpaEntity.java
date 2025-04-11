@@ -40,14 +40,12 @@ class ContractJpaEntity {
     private Integer leaseMileage;
     private Double leasePrice;
 
-    // TODO create new JPA entity for customer
     private String customerFirstName;
     private String customerLastName;
     private String customerEmail;
     private LocalDate customerBirthDate;
     private Double customerYearlyIncome;
-
-    // TODO create new JPA entity for car
+    
     private String carBrandName;
     private String carModel;
     private Double carCatalogPrice;

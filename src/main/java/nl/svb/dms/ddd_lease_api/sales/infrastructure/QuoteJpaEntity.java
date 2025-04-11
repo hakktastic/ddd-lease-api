@@ -34,8 +34,7 @@ class QuoteJpaEntity {
     private Double leasePrice;
     @Enumerated(EnumType.STRING)
     private QuoteStatus quoteStatus;
-
-    // TODO create new JPA entity for customer
+    
     private String customerFirstName;
     private String customerLastName;
     private String customerEmail;
@@ -43,7 +42,6 @@ class QuoteJpaEntity {
     private Double customerYearlyIncome;
     private Boolean customerHasBkrRegistration;
 
-    // TODO create new JPA entity for car
     private String carBrandName;
     private String carModel;
     private Double carCatalogPrice;
