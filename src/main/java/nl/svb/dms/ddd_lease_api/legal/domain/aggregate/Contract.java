@@ -12,18 +12,14 @@ import nl.svb.dms.ddd_lease_api.legal.domain.command.LegalCommand;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.LegalCommandResult;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
-import org.jmolecules.ddd.annotation.AggregateRoot;
-import org.jmolecules.ddd.annotation.Identity;
 import org.jmolecules.event.annotation.DomainEventHandler;
 
 @Slf4j
 @Getter
 @ToString
 @AllArgsConstructor(staticName = "of")
-@AggregateRoot
 public class Contract {
 
-    @Identity
     private final ContractReference contractReference;
 
     private final ContractEntity contractEntity;

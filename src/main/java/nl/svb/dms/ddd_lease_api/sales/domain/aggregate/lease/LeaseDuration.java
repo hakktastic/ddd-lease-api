@@ -1,8 +1,5 @@
 package nl.svb.dms.ddd_lease_api.sales.domain.aggregate.lease;
 
-import org.jmolecules.ddd.annotation.ValueObject;
-
-@ValueObject
 public record LeaseDuration(Long leaseDuration) {
 
     public static LeaseDuration of(Long leaseDuration) {

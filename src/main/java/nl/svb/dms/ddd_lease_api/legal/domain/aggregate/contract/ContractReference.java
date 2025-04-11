@@ -1,10 +1,7 @@
 package nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract;
 
-import org.jmolecules.ddd.annotation.ValueObject;
-
 import java.util.UUID;
 
-@ValueObject
 public record ContractReference(UUID contractReference) {
 
     public static ContractReference of() {

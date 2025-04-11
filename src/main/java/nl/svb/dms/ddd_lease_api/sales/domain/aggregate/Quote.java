@@ -10,18 +10,14 @@ import nl.svb.dms.ddd_lease_api.sales.domain.command.*;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
-import org.jmolecules.ddd.annotation.AggregateRoot;
-import org.jmolecules.ddd.annotation.Identity;
 import org.jmolecules.event.annotation.DomainEventHandler;
 
 @Slf4j
 @Getter
 @ToString
 @AllArgsConstructor(staticName = "of")
-@AggregateRoot
 public final class Quote {
 
-    @Identity
     private final QuoteReference quoteReference;
 
     private final QuoteEntity quoteEntity;
