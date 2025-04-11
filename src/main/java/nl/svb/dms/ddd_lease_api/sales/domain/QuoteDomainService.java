@@ -1,6 +1,7 @@
 package nl.svb.dms.ddd_lease_api.sales.domain;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.Quote;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.QuoteEntity;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.car.CarBrand;
@@ -18,15 +19,13 @@ import nl.svb.dms.ddd_lease_api.sales.domain.command.CalculateInstallmentCommand
 import nl.svb.dms.ddd_lease_api.sales.domain.command.CommandResult;
 import nl.svb.dms.ddd_lease_api.sales.domain.command.FillOutQuoteCommand;
 import nl.svb.dms.ddd_lease_api.sales.domain.command.SignQuoteCommand;
-import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEventPublishVisitor;
-import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEventSaveVisitor;
 
+@Slf4j
 @RequiredArgsConstructor
 public final class QuoteDomainService {
 
     private final QuoteProvider quoteProvider;
-    private final SalesEventSaveVisitor salesEventSaveVisitor;
-    private final SalesEventPublishVisitor salesEventPublishVisitor;
+    private final QuoteDomainRepository quoteDomainRepository;
 
     public CommandResult fillOut(LeaseDuration duration, LeaseMileage mileage, CustomerFirstName customerFirstName,
                                  CustomerLastName customerLastName, CustomerEmail customerEmail,
@@ -63,8 +62,10 @@ public final class QuoteDomainService {
         final var event = commandResult.getEvent();
 
         if (event != null) {
-            event.accept(salesEventSaveVisitor);
-            event.accept(salesEventPublishVisitor);
+            log.debug("Accepting visitor for event: {}", event);
+            event.accept(quoteDomainRepository);
+        } else {
+            log.warn("unable to find event for command: {}", commandResult);
         }
 
         return commandResult;

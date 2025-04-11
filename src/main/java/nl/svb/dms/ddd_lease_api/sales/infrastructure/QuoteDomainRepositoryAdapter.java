@@ -3,6 +3,7 @@ package nl.svb.dms.ddd_lease_api.sales.infrastructure;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import nl.svb.dms.ddd_lease_api.sales.SpringQuoteSignedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.QuoteDomainRepository;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.Quote;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteNotFoundException;
@@ -10,7 +11,7 @@ import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteReference;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
-import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,44 +21,49 @@ import java.util.Optional;
 @Component
 @Transactional
 @RequiredArgsConstructor
-class QuoteJpaRepositoryAdapter implements QuoteDomainRepository {
+class QuoteDomainRepositoryAdapter implements QuoteDomainRepository {
 
+    private final ApplicationEventPublisher eventPublisher;
     private final QuoteJpaRepository repository;
 
     @Override
-    public void save(QuoteFilledOutEvent quoteFilledOutEvent) {
+    public void handle(QuoteFilledOutEvent quoteFilledOutEvent) {
 
-        logSaveEvent(quoteFilledOutEvent);
         final var quoteJpaEntity = QuoteJpaEntity.from(quoteFilledOutEvent.getQuote());
-        logSaveJpaEntity(quoteJpaEntity);
-        repository.save(quoteJpaEntity);
+        persistEvent(quoteJpaEntity);
     }
 
     @Override
-    public void save(InstallmentCalculatedEvent installmentCalculatedEvent) {
+    public void handle(InstallmentCalculatedEvent installmentCalculatedEvent) {
 
-        logSaveEvent(installmentCalculatedEvent);
         final var quoteReference = installmentCalculatedEvent.getQuote().getQuoteReference();
         final var quoteJpaEntity = findQuoteJpaEntityBy(quoteReference);
         quoteJpaEntity.setLeasePrice(installmentCalculatedEvent.getQuote().getQuoteEntity().getLeasePrice().leasePrice());
         quoteJpaEntity.setQuoteStatus(installmentCalculatedEvent.getQuote().getQuoteEntity().getQuoteStatus());
 
-        logSaveJpaEntity(quoteJpaEntity);
-        repository.save(quoteJpaEntity);
+        persistEvent(quoteJpaEntity);
     }
 
     @Override
-    public void save(QuoteSignedEvent quoteSignedEvent) {
+    public void handle(QuoteSignedEvent quoteSignedEvent) {
 
-        logSaveEvent(quoteSignedEvent);
         final var quoteReference = quoteSignedEvent.getQuote().getQuoteReference();
         final var quoteJpaEntity = findQuoteJpaEntityBy(quoteReference);
         quoteJpaEntity.setQuoteStatus(quoteSignedEvent.getQuote().getQuoteEntity().getQuoteStatus());
 
-        logSaveJpaEntity(quoteJpaEntity);
+        persistEvent(quoteJpaEntity);
+        publishEvent(quoteSignedEvent);
+    }
+
+    private void persistEvent(QuoteJpaEntity quoteJpaEntity) {
+        log.debug("saving jpa entity: {}", quoteJpaEntity);
         repository.save(quoteJpaEntity);
     }
 
+    private void publishEvent(QuoteSignedEvent quoteSignedEvent) {
+        log.debug("publishing event: {}", quoteSignedEvent);
+        eventPublisher.publishEvent(SpringQuoteSignedEvent.from(quoteSignedEvent));
+    }
 
     public Optional<Quote> findQuoteBy(QuoteReference quoteReference) {
 
@@ -72,13 +78,5 @@ class QuoteJpaRepositoryAdapter implements QuoteDomainRepository {
 
         return repository.findByQuoteReference(quoteReference.quoteReference())
                 .orElseThrow(() -> new QuoteNotFoundException(quoteReference));
-    }
-
-    private void logSaveEvent(SalesEvent event) {
-        log.debug("saving event: {} ", event);
-    }
-
-    private void logSaveJpaEntity(QuoteJpaEntity quoteJpaEntity) {
-        log.debug("saving jpa entity: {}", quoteJpaEntity);
     }
 }

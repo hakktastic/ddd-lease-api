@@ -11,11 +11,11 @@ import java.util.Optional;
 
 public interface QuoteDomainRepository {
 
-    void save(QuoteFilledOutEvent quoteFilledOutEvent) throws QuoteNotFoundException;
+    void handle(QuoteFilledOutEvent quoteFilledOutEvent) throws QuoteNotFoundException;
 
-    void save(InstallmentCalculatedEvent installmentCalculatedEvent);
+    void handle(InstallmentCalculatedEvent installmentCalculatedEvent);
 
-    void save(QuoteSignedEvent quoteSignedEvent);
+    void handle(QuoteSignedEvent quoteSignedEvent);
 
     Optional<Quote> findQuoteBy(QuoteReference quoteReference);
 }

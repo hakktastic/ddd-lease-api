@@ -1,5 +1,6 @@
 package nl.svb.dms.ddd_lease_api.sales.domain.event;
 
+import nl.svb.dms.ddd_lease_api.sales.domain.QuoteDomainRepository;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.Quote;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteNotFoundException;
 
@@ -9,8 +10,9 @@ public class QuoteFilledOutEvent extends SalesEvent {
         super(quote);
     }
 
+
     @Override
-    public void accept(SalesVisitor salesVisitor) throws QuoteNotFoundException {
-        salesVisitor.visit(this);
+    public void accept(QuoteDomainRepository quoteDomainRepository) throws QuoteNotFoundException {
+        quoteDomainRepository.handle(this);
     }
 }
