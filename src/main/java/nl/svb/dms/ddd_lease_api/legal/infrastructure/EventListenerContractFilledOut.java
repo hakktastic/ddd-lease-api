@@ -17,6 +17,6 @@ class EventListenerContractFilledOut {
     @EventListener
     void on(ContractFilledOutEvent contractFilledOutEvent) {
         log.info("Contract filled out event received: {}", contractFilledOutEvent);
-        contractDomainService.checkCreditRating(contractFilledOutEvent.getContract().getContractReference());
+        contractDomainService.checkCreditRating(contractFilledOutEvent.getContract().getContractEntity().getContractReference());
     }
 }

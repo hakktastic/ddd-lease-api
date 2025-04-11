@@ -34,7 +34,7 @@ class ContractJpaRepositoryAdapter implements ContractDomainRepository {
     public void save(CreditRatingCheckedEvent creditRatingCheckedEvent) {
 
         logSaveEvent(creditRatingCheckedEvent);
-        final var contractReference = creditRatingCheckedEvent.getContract().getContractReference();
+        final var contractReference = creditRatingCheckedEvent.getContract().getContractEntity().getContractReference();
 
         final var contractJpaEntity = findContractJpaEntityBy(contractReference);
         contractJpaEntity.setContractStatus(creditRatingCheckedEvent.getContract().getContractEntity().getContractStatus());

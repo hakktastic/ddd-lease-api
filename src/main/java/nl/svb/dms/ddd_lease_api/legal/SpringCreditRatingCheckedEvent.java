@@ -15,6 +15,7 @@ public class SpringCreditRatingCheckedEvent {
     private final UUID contractReference;
 
     public static SpringCreditRatingCheckedEvent from(CreditRatingCheckedEvent creditRatingCheckedEvent) {
-        return new SpringCreditRatingCheckedEvent(creditRatingCheckedEvent.getContract().getContractReference().contractReference());
+        return new SpringCreditRatingCheckedEvent(
+                creditRatingCheckedEvent.getContract().getContractEntity().getContractReference().contractReference());
     }
 }

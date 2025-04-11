@@ -35,12 +35,12 @@ public class ContractDomainService {
                                       CarBrand brandName, CarModel model, CarCatalogPrice carCatalogPrice,
                                       LeasePrice leasePrice, QuoteReference quoteReference) {
 
-        final var contract = Contract.of(ContractReference.of(), ContractEntity.of(quoteReference, duration, mileage,
+        final var contract = Contract.of(ContractEntity.of(ContractReference.of(), quoteReference, duration, mileage,
                 customerFirstName, customerLastName, customerEmail, customerBirthDate, customerYearlyIncome, brandName,
                 model, carCatalogPrice, leasePrice, ContractStatus.CREATED, CreditRating.of(0.0)));
 
         final var fillOutContractResult = contract.handleCommand(FillOutContractCommand.of(
-                contract.getContractReference()));
+                contract.getContractEntity().getContractReference()));
 
         return acceptLegalEventVisitor(fillOutContractResult);
     }

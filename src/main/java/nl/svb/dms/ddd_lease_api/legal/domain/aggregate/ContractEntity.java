@@ -7,6 +7,7 @@ import lombok.ToString;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.car.CarBrand;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.car.CarCatalogPrice;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.car.CarModel;
+import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractReference;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractStatus;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.CreditRating;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.customer.*;
@@ -22,8 +23,8 @@ public class ContractEntity {
 
     public static final Double MIN_REQUIRED_CREDIT_RATING = 80.0;
 
+    private final ContractReference contractReference;
     private final QuoteReference quoteReference;
-
     private final LeaseDuration leaseDuration;
     private final LeaseMileage leaseMileage;
     private final CustomerFirstName customerFirstName;

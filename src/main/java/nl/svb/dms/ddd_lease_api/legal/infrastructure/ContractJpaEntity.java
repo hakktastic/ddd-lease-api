@@ -57,7 +57,7 @@ class ContractJpaEntity {
         final var contractDomainEntity = contract.getContractEntity();
 
         final var contractJpaEntity = new ContractJpaEntity();
-        contractJpaEntity.setContractReference(contract.getContractReference().contractReference());
+        contractJpaEntity.setContractReference(contractDomainEntity.getContractReference().contractReference());
         contractJpaEntity.setQuoteReference(contractDomainEntity.getQuoteReference().quoteReference());
         contractJpaEntity.setContractStatus(contractDomainEntity.getContractStatus());
         contractJpaEntity.setCreditRating(contractDomainEntity.getCreditRating().creditRating());
@@ -79,8 +79,8 @@ class ContractJpaEntity {
 
     Contract toContract() {
 
-        return Contract.of(ContractReference.of(this.contractReference),
-                ContractEntity.of(
+        return Contract.of(ContractEntity.of(
+                        ContractReference.of(contractReference),
                         QuoteReference.of(this.quoteReference),
                         LeaseDuration.of(this.leaseDuration),
                         LeaseMileage.of(this.leaseMileage),

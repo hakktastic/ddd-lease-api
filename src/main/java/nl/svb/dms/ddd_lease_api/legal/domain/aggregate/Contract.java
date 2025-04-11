@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractReference;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractStatus;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.CheckCreditRatingCommand;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.FillOutContractCommand;
@@ -19,8 +18,6 @@ import org.jmolecules.event.annotation.DomainEventHandler;
 @ToString
 @AllArgsConstructor(staticName = "of")
 public class Contract {
-
-    private final ContractReference contractReference;
 
     private final ContractEntity contractEntity;
 
