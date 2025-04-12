@@ -57,7 +57,7 @@ class QuoteDomainRepositoryAdapter implements QuoteDomainRepository {
 
     private void persistEvent(QuoteJpaEntity quoteJpaEntity) {
         log.debug("saving jpa entity: {}", quoteJpaEntity);
-        repository.save(quoteJpaEntity);
+        repository.persist(quoteJpaEntity);
     }
 
     private void publishEvent(QuoteSignedEvent quoteSignedEvent) {

@@ -66,7 +66,7 @@ class ContractDomainRepositoryAdapter implements ContractDomainRepository {
 
     private void persistEvent(ContractJpaEntity contractJpaEntity) {
         log.debug("saving jpa entity: {}", contractJpaEntity);
-        repository.save(contractJpaEntity);
+        repository.persist(contractJpaEntity);
     }
 
     private void publishEvent(LegalEvent legalEvent) {
