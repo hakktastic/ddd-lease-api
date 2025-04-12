@@ -29,7 +29,7 @@ class QuoteDomainRepositoryAdapter implements QuoteDomainRepository {
     @Override
     public void handle(QuoteFilledOutEvent quoteFilledOutEvent) {
 
-        final var quoteJpaEntity = ContractJpaEntity.from(quoteFilledOutEvent.getQuote());
+        final var quoteJpaEntity = QuoteJpaEntity.from(quoteFilledOutEvent.getQuote());
         persistEvent(quoteJpaEntity);
     }
 
@@ -55,7 +55,7 @@ class QuoteDomainRepositoryAdapter implements QuoteDomainRepository {
         publishEvent(quoteSignedEvent);
     }
 
-    private void persistEvent(ContractJpaEntity quoteJpaEntity) {
+    private void persistEvent(QuoteJpaEntity quoteJpaEntity) {
         log.debug("saving jpa entity: {}", quoteJpaEntity);
         repository.save(quoteJpaEntity);
     }
@@ -70,11 +70,11 @@ class QuoteDomainRepositoryAdapter implements QuoteDomainRepository {
         final var quoteReferenceUUID = quoteReference.quoteReference();
         final var optionalQuoteJpaEntity = repository.findByQuoteReference(quoteReferenceUUID);
 
-        return optionalQuoteJpaEntity.map(ContractJpaEntity::toQuote);
+        return optionalQuoteJpaEntity.map(QuoteJpaEntity::toQuote);
     }
 
     @SneakyThrows
-    private ContractJpaEntity findQuoteJpaEntityBy(QuoteReference quoteReference) {
+    private QuoteJpaEntity findQuoteJpaEntityBy(QuoteReference quoteReference) {
 
         return repository.findByQuoteReference(quoteReference.quoteReference())
                 .orElseThrow(() -> new QuoteNotFoundException(quoteReference));
