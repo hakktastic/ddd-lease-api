@@ -30,6 +30,7 @@ class ContractJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private UUID contractReference;
     private UUID quoteReference;
     @Enumerated(EnumType.STRING)
@@ -45,10 +46,13 @@ class ContractJpaEntity {
     private String customerEmail;
     private LocalDate customerBirthDate;
     private Double customerYearlyIncome;
-    
+
     private String carBrandName;
     private String carModel;
     private Double carCatalogPrice;
+
+    @Version
+    private int revision;
 
     static ContractJpaEntity from(Contract contract) {
 

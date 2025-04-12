@@ -28,6 +28,7 @@ class QuoteJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private UUID quoteReference;
     private Long leaseDuration;
     private Integer leaseMileage;
@@ -44,6 +45,9 @@ class QuoteJpaEntity {
     private String carBrandName;
     private String carModel;
     private Double carCatalogPrice;
+
+    @Version
+    private int revision;
 
     static QuoteJpaEntity from(Quote quote) {
 
