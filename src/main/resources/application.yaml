@@ -34,13 +34,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-  endpoint:
-    modulith:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: health, info, modulith
   sql:
     init:
       # https://docs.spring.io/spring-boot/how-to/data-initialization.html#howto.data-initialization.using-basic-sql-scripts
