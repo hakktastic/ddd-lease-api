@@ -12,7 +12,7 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeaseMileage;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeasePrice;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.quote.QuoteReference;
 import nl.svb.dms.ddd_lease_api.sales.SpringQuoteSignedEvent;
-import org.springframework.modulith.events.ApplicationModuleListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -22,7 +22,7 @@ class EventListenerQuoteSigned {
 
     private final ContractDomainService contractDomainService;
 
-    @ApplicationModuleListener
+    @EventListener
     void on(SpringQuoteSignedEvent quoteSignedEvent) {
         log.info("Quote signed event received: {}", quoteSignedEvent);
 
