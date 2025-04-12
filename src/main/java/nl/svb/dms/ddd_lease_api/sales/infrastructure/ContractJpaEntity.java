@@ -23,7 +23,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @Entity(name = "quote")
-class QuoteJpaEntity {
+class ContractJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,10 +45,10 @@ class QuoteJpaEntity {
     private String carModel;
     private Double carCatalogPrice;
 
-    static QuoteJpaEntity from(Quote quote) {
+    static ContractJpaEntity from(Quote quote) {
 
         final var quoteEntity = quote.getQuoteEntity();
-        final var quoteJpaEntity = new QuoteJpaEntity();
+        final var quoteJpaEntity = new ContractJpaEntity();
 
         quoteJpaEntity.setQuoteReference(quote.getQuoteReference().quoteReference());
         quoteJpaEntity.setLeaseDuration(quoteEntity.getLeaseDuration().leaseDuration());

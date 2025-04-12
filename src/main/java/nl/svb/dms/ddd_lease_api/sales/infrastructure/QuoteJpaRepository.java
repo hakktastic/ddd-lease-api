@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-interface QuoteJpaRepository extends CrudRepository<QuoteJpaEntity, Long> {
+interface QuoteJpaRepository extends CrudRepository<ContractJpaEntity, Long> {
 
-    Optional<QuoteJpaEntity> findByQuoteReference(UUID quoteReference);
+    Optional<ContractJpaEntity> findByQuoteReference(UUID quoteReference);
 }

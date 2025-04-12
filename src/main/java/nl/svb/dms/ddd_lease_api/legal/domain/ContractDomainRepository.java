@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface ContractDomainRepository {
 
-    void save(ContractFilledOutEvent contractFilledOutEvent);
+    void handle(ContractFilledOutEvent contractFilledOutEvent);
 
-    void save(CreditRatingCheckedEvent creditRatingCheckedEvent);
+    void handle(CreditRatingCheckedEvent creditRatingCheckedEvent);
 
     Optional<Contract> findContractBy(ContractReference contractReference);
 

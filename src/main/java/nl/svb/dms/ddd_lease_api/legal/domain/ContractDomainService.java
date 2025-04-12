@@ -1,6 +1,7 @@
 package nl.svb.dms.ddd_lease_api.legal.domain;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.Contract;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.ContractEntity;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.car.CarBrand;
@@ -18,15 +19,12 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.quote.QuoteReference;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.CheckCreditRatingCommand;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.FillOutContractCommand;
 import nl.svb.dms.ddd_lease_api.legal.domain.command.LegalCommandResult;
-import nl.svb.dms.ddd_lease_api.legal.domain.event.LegalEventPublishVisitor;
-import nl.svb.dms.ddd_lease_api.legal.domain.event.LegalEventSaveVisitor;
 
+@Slf4j
 @RequiredArgsConstructor
 public class ContractDomainService {
 
     private final ContractProvider contractProvider;
-    private final LegalEventSaveVisitor legalEventSaveVisitor;
-    private final LegalEventPublishVisitor legalEventPublishVisitor;
     private final ContractDomainRepository contractDomainRepository;
 
     public LegalCommandResult fillOut(LeaseDuration duration, LeaseMileage mileage, CustomerFirstName customerFirstName,
@@ -60,8 +58,10 @@ public class ContractDomainService {
         final var legalEvent = legalCommandResult.getLegalEvent();
 
         if (legalEvent != null) {
-            legalEvent.accept(legalEventSaveVisitor);
-            legalEvent.accept(legalEventPublishVisitor);
+            log.debug("Accepting visitor for event: {}", legalEvent);
+            legalEvent.accept(contractDomainRepository);
+        } else {
+            log.warn("unable to find event for command: {}", legalCommandResult);
         }
 
         return legalCommandResult;
