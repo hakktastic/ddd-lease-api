@@ -1,0 +1,1 @@
+package nl.svb.dms.ddd_lease_api.purchase;
