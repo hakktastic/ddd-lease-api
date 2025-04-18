@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public record QuoteReference(UUID quoteReference) {
 
-    public static QuoteReference of(UUID quoteReference) {
-        return new QuoteReference(quoteReference);
-    }
+  public static QuoteReference of(UUID quoteReference) {
+    return new QuoteReference(quoteReference);
+  }
 }

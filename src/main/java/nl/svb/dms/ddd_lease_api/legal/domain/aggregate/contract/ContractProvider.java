@@ -7,9 +7,9 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.Contract;
 @RequiredArgsConstructor(staticName = "of")
 public class ContractProvider {
 
-    private final ContractDomainRepository contractDomainRepository;
+  private final ContractDomainRepository contractDomainRepository;
 
-    public Contract findContract(ContractReference contractReference) {
-        return contractDomainRepository.findContractBy(contractReference).orElse(null);
-    }
+  public Contract findContract(ContractReference contractReference) {
+    return contractDomainRepository.findContractBy(contractReference).orElse(null);
+  }
 }

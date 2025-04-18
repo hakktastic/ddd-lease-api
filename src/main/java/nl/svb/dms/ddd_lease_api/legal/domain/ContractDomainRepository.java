@@ -1,19 +1,18 @@
 package nl.svb.dms.ddd_lease_api.legal.domain;
 
+import java.util.Optional;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.Contract;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractReference;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.ContractFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.legal.domain.event.CreditRatingCheckedEvent;
 
-import java.util.Optional;
-
 public interface ContractDomainRepository {
 
-    void handle(ContractFilledOutEvent contractFilledOutEvent);
+  void handle(ContractFilledOutEvent contractFilledOutEvent);
 
-    void handle(CreditRatingCheckedEvent creditRatingCheckedEvent);
+  void handle(CreditRatingCheckedEvent creditRatingCheckedEvent);
 
-    Optional<Contract> findContractBy(ContractReference contractReference);
+  Optional<Contract> findContractBy(ContractReference contractReference);
 
-    Double getCreditRating(ContractReference contractReference);
+  Double getCreditRating(ContractReference contractReference);
 }

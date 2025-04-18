@@ -12,5 +12,5 @@ import org.jmolecules.event.annotation.DomainEvent;
 @DomainEvent
 public class FillOutQuoteCommand implements SalesCommand {
 
-    private final QuoteReference quoteReference;
+  private final QuoteReference quoteReference;
 }

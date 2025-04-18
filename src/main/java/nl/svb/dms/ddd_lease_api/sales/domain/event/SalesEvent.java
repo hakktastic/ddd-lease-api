@@ -12,7 +12,8 @@ import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteNotFoundExcept
 @RequiredArgsConstructor
 public abstract class SalesEvent {
 
-    public final Quote quote;
+  public final Quote quote;
 
-    public abstract void accept(QuoteDomainRepository quoteDomainRepository) throws QuoteNotFoundException;
+  public abstract void accept(QuoteDomainRepository quoteDomainRepository)
+      throws QuoteNotFoundException;
 }

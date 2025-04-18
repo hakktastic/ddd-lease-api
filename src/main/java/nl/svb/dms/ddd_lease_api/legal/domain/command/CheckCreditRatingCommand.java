@@ -13,6 +13,6 @@ import org.jmolecules.event.annotation.DomainEvent;
 @DomainEvent
 public class CheckCreditRatingCommand implements LegalCommand {
 
-    private final ContractReference contractReference;
-    private final CreditRating creditRating;
+  private final ContractReference contractReference;
+  private final CreditRating creditRating;
 }

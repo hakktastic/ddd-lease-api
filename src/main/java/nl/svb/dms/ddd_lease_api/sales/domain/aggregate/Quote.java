@@ -6,7 +6,11 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteReference;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteStatus;
-import nl.svb.dms.ddd_lease_api.sales.domain.command.*;
+import nl.svb.dms.ddd_lease_api.sales.domain.command.CalculateInstallmentCommand;
+import nl.svb.dms.ddd_lease_api.sales.domain.command.CommandResult;
+import nl.svb.dms.ddd_lease_api.sales.domain.command.FillOutQuoteCommand;
+import nl.svb.dms.ddd_lease_api.sales.domain.command.SalesCommand;
+import nl.svb.dms.ddd_lease_api.sales.domain.command.SignQuoteCommand;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.InstallmentCalculatedEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteFilledOutEvent;
 import nl.svb.dms.ddd_lease_api.sales.domain.event.QuoteSignedEvent;
@@ -18,71 +22,72 @@ import org.jmolecules.event.annotation.DomainEventHandler;
 @AllArgsConstructor(staticName = "of")
 public final class Quote {
 
-    private final QuoteReference quoteReference;
+  private final QuoteReference quoteReference;
 
-    private final QuoteEntity quoteEntity;
+  private final QuoteEntity quoteEntity;
 
-    @DomainEventHandler
-    public CommandResult handleCommand(final FillOutQuoteCommand fillOutQuoteCommand) {
+  @DomainEventHandler
+  public CommandResult handleCommand(final FillOutQuoteCommand fillOutQuoteCommand) {
 
-        logCommand(fillOutQuoteCommand);
+    logCommand(fillOutQuoteCommand);
 
-        if (!quoteEntity.customerHasMinimumRequiredAge()) {
-            return rejectQuote(QuoteStatus.REJECTED_MIN_AGE);
+    if (!quoteEntity.customerHasMinimumRequiredAge()) {
+      return rejectQuote(QuoteStatus.REJECTED_MIN_AGE);
 
-        } else if (!quoteEntity.customerHasMinimumRequiredIncome()) {
-            return rejectQuote(QuoteStatus.REJECTED_MIN_INCOME);
+    } else if (!quoteEntity.customerHasMinimumRequiredIncome()) {
+      return rejectQuote(QuoteStatus.REJECTED_MIN_INCOME);
 
-        }
-
-        return fillOutQuote();
     }
 
-    @DomainEventHandler
-    public CommandResult handleCommand(final CalculateInstallmentCommand calculateInstallmentCommand) {
+    return fillOutQuote();
+  }
 
-        logCommand(calculateInstallmentCommand);
-        quoteEntity.calculateLeasePrice();
+  @DomainEventHandler
+  public CommandResult handleCommand(
+      final CalculateInstallmentCommand calculateInstallmentCommand) {
 
-        if (!quoteEntity.installmentAmountIsAllowed()) {
-            return rejectQuote(QuoteStatus.REJECTED_MAX_PERCENTAGE_OF_YEARLY_INCOME);
-        }
+    logCommand(calculateInstallmentCommand);
+    quoteEntity.calculateLeasePrice();
 
-        return calculateInstallmentForQuote();
+    if (!quoteEntity.installmentAmountIsAllowed()) {
+      return rejectQuote(QuoteStatus.REJECTED_MAX_PERCENTAGE_OF_YEARLY_INCOME);
     }
 
-    @DomainEventHandler
-    public CommandResult handleCommand(final SignQuoteCommand signQuoteCommand) {
+    return calculateInstallmentForQuote();
+  }
 
-        logCommand(signQuoteCommand);
+  @DomainEventHandler
+  public CommandResult handleCommand(final SignQuoteCommand signQuoteCommand) {
 
-        return signQuote();
-    }
+    logCommand(signQuoteCommand);
 
-    private CommandResult fillOutQuote() {
-        quoteEntity.setQuoteStatus(QuoteStatus.FILLED_OUT);
-        return CommandResult.of(this, QuoteStatus.FILLED_OUT, new QuoteFilledOutEvent(this));
-    }
+    return signQuote();
+  }
 
-    private CommandResult calculateInstallmentForQuote() {
-        quoteEntity.setQuoteStatus(QuoteStatus.CALCULATED);
-        return CommandResult.of(this, QuoteStatus.CALCULATED, new InstallmentCalculatedEvent(this));
-    }
+  private CommandResult fillOutQuote() {
+    quoteEntity.setQuoteStatus(QuoteStatus.FILLED_OUT);
+    return CommandResult.of(this, QuoteStatus.FILLED_OUT, new QuoteFilledOutEvent(this));
+  }
 
-    private CommandResult signQuote() {
-        quoteEntity.setQuoteStatus(QuoteStatus.SIGNED);
-        return CommandResult.of(this, QuoteStatus.SIGNED, new QuoteSignedEvent(this));
-    }
+  private CommandResult calculateInstallmentForQuote() {
+    quoteEntity.setQuoteStatus(QuoteStatus.CALCULATED);
+    return CommandResult.of(this, QuoteStatus.CALCULATED, new InstallmentCalculatedEvent(this));
+  }
 
-    private CommandResult rejectQuote(QuoteStatus reasonForRejection) {
+  private CommandResult signQuote() {
+    quoteEntity.setQuoteStatus(QuoteStatus.SIGNED);
+    return CommandResult.of(this, QuoteStatus.SIGNED, new QuoteSignedEvent(this));
+  }
 
-        quoteEntity.setQuoteStatus(reasonForRejection);
-        log.warn("quote rejected with reason: {}", reasonForRejection);
+  private CommandResult rejectQuote(QuoteStatus reasonForRejection) {
 
-        return CommandResult.of(this, reasonForRejection, null);
-    }
+    quoteEntity.setQuoteStatus(reasonForRejection);
+    log.warn("quote rejected with reason: {}", reasonForRejection);
 
-    private void logCommand(SalesCommand salesCommand) {
-        log.debug("handling command: {}", salesCommand.toString());
-    }
+    return CommandResult.of(this, reasonForRejection, null);
+  }
+
+  private void logCommand(SalesCommand salesCommand) {
+    log.debug("handling command: {}", salesCommand.toString());
+  }
 }

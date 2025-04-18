@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class EventListenerCreditRatingChecked {
 
-    @ApplicationModuleListener
-    void on(SpringCreditRatingCheckedEvent creditRatingCheckedEvent) {
-        log.info("Credit rating checked event received: {}", creditRatingCheckedEvent);
-    }
+  @ApplicationModuleListener
+  void on(SpringCreditRatingCheckedEvent creditRatingCheckedEvent) {
+    log.info("Credit rating checked event received: {}", creditRatingCheckedEvent);
+  }
 }

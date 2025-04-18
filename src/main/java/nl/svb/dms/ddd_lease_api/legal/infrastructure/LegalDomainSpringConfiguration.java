@@ -12,14 +12,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class LegalDomainSpringConfiguration {
 
-    @Bean
-    ContractDomainService contractDomainService(ContractProvider contractProvider,
-                                                ContractDomainRepository contractDomainRepository) {
-        return new ContractDomainService(contractProvider, contractDomainRepository);
-    }
+  @Bean
+  ContractDomainService contractDomainService(ContractProvider contractProvider,
+      ContractDomainRepository contractDomainRepository) {
+    return new ContractDomainService(contractProvider, contractDomainRepository);
+  }
 
-    @Bean
-    ContractProvider contractProvider(ContractDomainRepository contractDomainRepository) {
-        return ContractProvider.of(contractDomainRepository);
-    }
+  @Bean
+  ContractProvider contractProvider(ContractDomainRepository contractDomainRepository) {
+    return ContractProvider.of(contractDomainRepository);
+  }
 }

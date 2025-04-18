@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record CustomerBirthDate(LocalDate customerBirthDate) {
 
-    public static CustomerBirthDate of(LocalDate customerBirthDate) {
-        return new CustomerBirthDate(customerBirthDate);
-    }
+  public static CustomerBirthDate of(LocalDate customerBirthDate) {
+    return new CustomerBirthDate(customerBirthDate);
+  }
 }

@@ -6,13 +6,13 @@ import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteNotFoundExcept
 
 public class QuoteFilledOutEvent extends SalesEvent {
 
-    public QuoteFilledOutEvent(Quote quote) {
-        super(quote);
-    }
+  public QuoteFilledOutEvent(Quote quote) {
+    super(quote);
+  }
 
 
-    @Override
-    public void accept(QuoteDomainRepository quoteDomainRepository) throws QuoteNotFoundException {
-        quoteDomainRepository.handle(this);
-    }
+  @Override
+  public void accept(QuoteDomainRepository quoteDomainRepository) throws QuoteNotFoundException {
+    quoteDomainRepository.handle(this);
+  }
 }

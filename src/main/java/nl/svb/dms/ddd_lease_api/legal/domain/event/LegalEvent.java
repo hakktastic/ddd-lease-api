@@ -11,7 +11,7 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.Contract;
 @RequiredArgsConstructor
 public abstract class LegalEvent {
 
-    private final Contract contract;
+  private final Contract contract;
 
-    public abstract void accept(ContractDomainRepository contractDomainRepository);
+  public abstract void accept(ContractDomainRepository contractDomainRepository);
 }

@@ -12,7 +12,7 @@ import nl.svb.dms.ddd_lease_api.legal.domain.event.LegalEvent;
 @RequiredArgsConstructor(staticName = "of")
 public class LegalCommandResult {
 
-    private final Contract contract;
-    private final ContractStatus contractStatus;
-    private final LegalEvent legalEvent;
+  private final Contract contract;
+  private final ContractStatus contractStatus;
+  private final LegalEvent legalEvent;
 }

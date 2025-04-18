@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 class QuoteRestControllerAdvice {
 
-    @ExceptionHandler(QuoteNotFoundException.class)
-    public ResponseEntity<Void> handleNotFoundExceptions(Exception exception) {
-        return ResponseEntity.notFound().build();
-    }
+  @ExceptionHandler(QuoteNotFoundException.class)
+  public ResponseEntity<Void> handleNotFoundExceptions(Exception exception) {
+    return ResponseEntity.notFound().build();
+  }
 }

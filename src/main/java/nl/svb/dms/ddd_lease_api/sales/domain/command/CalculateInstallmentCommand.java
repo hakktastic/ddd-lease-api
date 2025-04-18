@@ -8,4 +8,5 @@ import org.jmolecules.event.annotation.DomainEvent;
 @RequiredArgsConstructor(staticName = "of")
 @DomainEvent
 public class CalculateInstallmentCommand implements SalesCommand {
+
 }

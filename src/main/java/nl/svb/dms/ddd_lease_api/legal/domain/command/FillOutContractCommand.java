@@ -12,5 +12,5 @@ import org.jmolecules.event.annotation.DomainEvent;
 @DomainEvent
 public class FillOutContractCommand implements LegalCommand {
 
-    private final ContractReference contractReference;
+  private final ContractReference contractReference;
 }

@@ -19,44 +19,44 @@ import org.jmolecules.event.annotation.DomainEventHandler;
 @AllArgsConstructor(staticName = "of")
 public class Contract {
 
-    private final ContractEntity contractEntity;
+  private final ContractEntity contractEntity;
 
-    @DomainEventHandler
-    public LegalCommandResult handleCommand(FillOutContractCommand fillOutContractCommand) {
+  @DomainEventHandler
+  public LegalCommandResult handleCommand(FillOutContractCommand fillOutContractCommand) {
 
-        logCommand(fillOutContractCommand);
-        return fillOutContract();
+    logCommand(fillOutContractCommand);
+    return fillOutContract();
+  }
+
+  @DomainEventHandler
+  public LegalCommandResult handleCommand(CheckCreditRatingCommand checkCreditRatingCommand) {
+
+    logCommand(checkCreditRatingCommand);
+    contractEntity.addCreditRating(checkCreditRatingCommand.getCreditRating());
+
+    if (!contractEntity.hasCustomerValidCreditRating()) {
+      return rejectContract(ContractStatus.REJECTED_CREDIT_SCORE);
     }
+    return checkCreditRating();
+  }
 
-    @DomainEventHandler
-    public LegalCommandResult handleCommand(CheckCreditRatingCommand checkCreditRatingCommand) {
+  private LegalCommandResult rejectContract(ContractStatus reasonForRejection) {
+    contractEntity.setContractStatus(reasonForRejection);
+    log.warn("contract rejected with reason: {}", reasonForRejection);
+    return LegalCommandResult.of(this, reasonForRejection, null);
+  }
 
-        logCommand(checkCreditRatingCommand);
-        contractEntity.addCreditRating(checkCreditRatingCommand.getCreditRating());
+  private LegalCommandResult fillOutContract() {
+    contractEntity.setContractStatus(ContractStatus.FILLED_OUT);
+    return LegalCommandResult.of(this, ContractStatus.FILLED_OUT, new ContractFilledOutEvent(this));
+  }
 
-        if (!contractEntity.hasCustomerValidCreditRating()) {
-            return rejectContract(ContractStatus.REJECTED_CREDIT_SCORE);
-        }
-        return checkCreditRating();
-    }
+  private LegalCommandResult checkCreditRating() {
+    contractEntity.setContractStatus(ContractStatus.ACCEPTED);
+    return LegalCommandResult.of(this, ContractStatus.ACCEPTED, new CreditRatingCheckedEvent(this));
+  }
 
-    private LegalCommandResult rejectContract(ContractStatus reasonForRejection) {
-        contractEntity.setContractStatus(reasonForRejection);
-        log.warn("contract rejected with reason: {}", reasonForRejection);
-        return LegalCommandResult.of(this, reasonForRejection, null);
-    }
-
-    private LegalCommandResult fillOutContract() {
-        contractEntity.setContractStatus(ContractStatus.FILLED_OUT);
-        return LegalCommandResult.of(this, ContractStatus.FILLED_OUT, new ContractFilledOutEvent(this));
-    }
-
-    private LegalCommandResult checkCreditRating() {
-        contractEntity.setContractStatus(ContractStatus.ACCEPTED);
-        return LegalCommandResult.of(this, ContractStatus.ACCEPTED, new CreditRatingCheckedEvent(this));
-    }
-
-    private void logCommand(LegalCommand legalCommand) {
-        log.debug("handling command: {}", legalCommand.toString());
-    }
+  private void logCommand(LegalCommand legalCommand) {
+    log.debug("handling command: {}", legalCommand.toString());
+  }
 }

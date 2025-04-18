@@ -7,10 +7,10 @@ import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.Quote;
 @RequiredArgsConstructor(staticName = "of")
 public class QuoteProvider {
 
-    private final QuoteDomainRepository quoteDomainRepository;
+  private final QuoteDomainRepository quoteDomainRepository;
 
-    public Quote findQuote(QuoteReference quoteReference) throws QuoteNotFoundException {
-        return quoteDomainRepository.findQuoteBy(quoteReference)
-                .orElseThrow(() -> new QuoteNotFoundException(quoteReference));
-    }
+  public Quote findQuote(QuoteReference quoteReference) throws QuoteNotFoundException {
+    return quoteDomainRepository.findQuoteBy(quoteReference)
+        .orElseThrow(() -> new QuoteNotFoundException(quoteReference));
+  }
 }

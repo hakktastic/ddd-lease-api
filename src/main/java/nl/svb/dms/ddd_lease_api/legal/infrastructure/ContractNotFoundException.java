@@ -5,7 +5,7 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.contract.ContractReferenc
 
 class ContractNotFoundException extends Exception {
 
-    public ContractNotFoundException(ContractReference contractReference) {
-        super("Unable to find contract with reference " + contractReference.toString());
-    }
+  public ContractNotFoundException(ContractReference contractReference) {
+    super("Unable to find contract with reference " + contractReference.toString());
+  }
 }

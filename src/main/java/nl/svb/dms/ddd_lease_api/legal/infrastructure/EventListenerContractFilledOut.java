@@ -12,11 +12,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class EventListenerContractFilledOut {
 
-    private final ContractDomainService contractDomainService;
+  private final ContractDomainService contractDomainService;
 
-    @ApplicationModuleListener
-    void on(ContractFilledOutEvent contractFilledOutEvent) {
-        log.info("Contract filled out event received: {}", contractFilledOutEvent);
-        contractDomainService.checkCreditRating(contractFilledOutEvent.getContract().getContractEntity().getContractReference());
-    }
+  @ApplicationModuleListener
+  void on(ContractFilledOutEvent contractFilledOutEvent) {
+    log.info("Contract filled out event received: {}", contractFilledOutEvent);
+    contractDomainService.checkCreditRating(
+        contractFilledOutEvent.getContract().getContractEntity().getContractReference());
+  }
 }

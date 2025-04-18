@@ -10,5 +10,5 @@ import org.jmolecules.event.annotation.DomainEvent;
 @DomainEvent
 public class SignQuoteCommand implements SalesCommand {
 
-    private final CustomerSignature customerSignature;
+  private final CustomerSignature customerSignature;
 }

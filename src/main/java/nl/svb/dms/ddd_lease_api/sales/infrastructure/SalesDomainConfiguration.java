@@ -12,13 +12,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class SalesDomainConfiguration {
 
-    @Bean
-    QuoteDomainService quoteDomainService(QuoteProvider quoteProvider, QuoteDomainRepository quoteDomainRepository) {
-        return new QuoteDomainService(quoteProvider, quoteDomainRepository);
-    }
+  @Bean
+  QuoteDomainService quoteDomainService(QuoteProvider quoteProvider,
+      QuoteDomainRepository quoteDomainRepository) {
+    return new QuoteDomainService(quoteProvider, quoteDomainRepository);
+  }
 
-    @Bean
-    QuoteProvider quoteProvider(QuoteDomainRepository quoteDomainRepository) {
-        return QuoteProvider.of(quoteDomainRepository);
-    }
+  @Bean
+  QuoteProvider quoteProvider(QuoteDomainRepository quoteDomainRepository) {
+    return QuoteProvider.of(quoteDomainRepository);
+  }
 }

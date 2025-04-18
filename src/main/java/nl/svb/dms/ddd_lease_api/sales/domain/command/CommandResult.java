@@ -12,7 +12,7 @@ import nl.svb.dms.ddd_lease_api.sales.domain.event.SalesEvent;
 @RequiredArgsConstructor(staticName = "of")
 public class CommandResult {
 
-    private final Quote quote;
-    private final QuoteStatus status;
-    private final SalesEvent event;
+  private final Quote quote;
+  private final QuoteStatus status;
+  private final SalesEvent event;
 }
