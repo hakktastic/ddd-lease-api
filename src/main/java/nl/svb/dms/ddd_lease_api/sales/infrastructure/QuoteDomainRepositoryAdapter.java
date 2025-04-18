@@ -28,7 +28,7 @@ class QuoteDomainRepositoryAdapter implements QuoteDomainRepository {
   @Override
   public void handle(QuoteFilledOutEvent quoteFilledOutEvent) {
 
-    final var quoteJpaEntity = QuoteJpaEntity.from(quoteFilledOutEvent.getQuote());
+    final var quoteJpaEntity = QuoteDocument.from(quoteFilledOutEvent.getQuote());
     persistEvent(quoteJpaEntity);
   }
 
@@ -56,9 +56,9 @@ class QuoteDomainRepositoryAdapter implements QuoteDomainRepository {
     publishEvent(quoteSignedEvent);
   }
 
-  private void persistEvent(QuoteJpaEntity quoteJpaEntity) {
-    log.debug("saving jpa entity: {}", quoteJpaEntity);
-    repository.persist(quoteJpaEntity);
+  private void persistEvent(QuoteDocument quoteDocument) {
+    log.debug("saving jpa entity: {}", quoteDocument);
+    repository.save(quoteDocument);
   }
 
   private void publishEvent(QuoteSignedEvent quoteSignedEvent) {
@@ -71,11 +71,11 @@ class QuoteDomainRepositoryAdapter implements QuoteDomainRepository {
     final var quoteReferenceUUID = quoteReference.quoteReference();
     final var optionalQuoteJpaEntity = repository.findByQuoteReference(quoteReferenceUUID);
 
-    return optionalQuoteJpaEntity.map(QuoteJpaEntity::toQuote);
+    return optionalQuoteJpaEntity.map(QuoteDocument::toQuote);
   }
 
   @SneakyThrows
-  private QuoteJpaEntity findQuoteJpaEntityBy(QuoteReference quoteReference) {
+  private QuoteDocument findQuoteJpaEntityBy(QuoteReference quoteReference) {
 
     return repository.findByQuoteReference(quoteReference.quoteReference())
         .orElseThrow(() -> new QuoteNotFoundException(quoteReference));

@@ -1,12 +1,5 @@
 package nl.svb.dms.ddd_lease_api.sales.infrastructure;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Version;
 import java.time.LocalDate;
 import java.util.UUID;
 import lombok.Getter;
@@ -27,22 +20,24 @@ import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.lease.LeaseMileage;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.lease.LeasePrice;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteReference;
 import nl.svb.dms.ddd_lease_api.sales.domain.aggregate.quote.QuoteStatus;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
 @ToString
-@Entity(name = "quote")
-class QuoteJpaEntity {
+@Document(collection = "quotes")
+class QuoteDocument {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private ObjectId id;
 
   private UUID quoteReference;
   private Long leaseDuration;
   private Integer leaseMileage;
   private Double leasePrice;
-  @Enumerated(EnumType.STRING)
   private QuoteStatus quoteStatus;
 
   private String customerFirstName;
@@ -58,10 +53,10 @@ class QuoteJpaEntity {
   @Version
   private int revision;
 
-  static QuoteJpaEntity from(Quote quote) {
+  static QuoteDocument from(Quote quote) {
 
     final var quoteEntity = quote.getQuoteEntity();
-    final var quoteJpaEntity = new QuoteJpaEntity();
+    final var quoteJpaEntity = new QuoteDocument();
 
     quoteJpaEntity.setQuoteReference(quote.getQuoteReference().quoteReference());
     quoteJpaEntity.setLeaseDuration(quoteEntity.getLeaseDuration().leaseDuration());

@@ -1,12 +1,5 @@
 package nl.svb.dms.ddd_lease_api.legal.infrastructure;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Version;
 import java.time.LocalDate;
 import java.util.UUID;
 import lombok.Getter;
@@ -29,20 +22,22 @@ import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeaseDuration;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeaseMileage;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.lease.LeasePrice;
 import nl.svb.dms.ddd_lease_api.legal.domain.aggregate.quote.QuoteReference;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
 @ToString
-@Entity(name = "contract")
-class ContractJpaEntity {
+@Document(collection = "contracts")
+class ContractDocument {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private ObjectId _id;
 
   private UUID contractReference;
   private UUID quoteReference;
-  @Enumerated(EnumType.STRING)
   private ContractStatus contractStatus;
   private Double creditRating;
 
@@ -63,11 +58,11 @@ class ContractJpaEntity {
   @Version
   private int revision;
 
-  static ContractJpaEntity from(Contract contract) {
+  static ContractDocument from(Contract contract) {
 
     final var contractDomainEntity = contract.getContractEntity();
 
-    final var contractJpaEntity = new ContractJpaEntity();
+    final var contractJpaEntity = new ContractDocument();
     contractJpaEntity.setContractReference(
         contractDomainEntity.getContractReference().contractReference());
     contractJpaEntity.setQuoteReference(contractDomainEntity.getQuoteReference().quoteReference());

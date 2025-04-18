@@ -1,19 +1,13 @@
 package nl.svb.dms.ddd_lease_api.legal.infrastructure;
 
-import io.hypersistence.utils.spring.repository.BaseJpaRepository;
 import java.util.Optional;
 import java.util.UUID;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- * <a href="https://vladmihalcea.com/basejparepository-hypersistence-utils">The awesome
- * BaseJpaRepository from Hypersistence Utils</a>
- * <a href="https://vladmihalcea.com/best-spring-data-jparepository">The JPA save antipattern</a>
- * <a href="https://vladmihalcea.com/spring-data-findall-anti-pattern">The JPA findAll
- * antipattern</a>
- */
 @Repository
-interface ContractJpaRepository extends BaseJpaRepository<ContractJpaEntity, Long> {
+interface ContractJpaRepository extends MongoRepository<ContractDocument, ObjectId> {
 
-  Optional<ContractJpaEntity> findByContractReference(UUID contractReference);
+  Optional<ContractDocument> findByContractReference(UUID contractReference);
 }

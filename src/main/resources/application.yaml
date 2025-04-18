@@ -15,37 +15,24 @@ spring:
       externalization:
         enabled: false
       republish-outstanding-events-on-restart: true
-      # https://docs.spring.io/spring-modulith/reference/appendix.html#schemas
-      # this because I'm triggering the creation of the event_publication table
-      # my payload for the published events is too large and the field serialized_event allows only varchar(255)
-      jdbc:
-        schema-initialization:
-          enabled: false
   docker:
     compose:
       enabled: true
-      file: compose.yaml
+      file: compose/compose.yaml
       lifecycle-management: start_and_stop
       skip:
         in-tests: false
-  datasource:
-    url: jdbc:postgresql://localhost:5432
-    username: admin
-    password: secret
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-  sql:
-    init:
-      # https://docs.spring.io/spring-boot/how-to/data-initialization.html#howto.data-initialization.using-basic-sql-scripts
-      # to trigger src/main/resources/schema-postgresql.sql
-      mode: always
-      platform: postgresql
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: secret
+      database: lease-api
+      uuid-representation: standard
 
 logging:
   level:
     org.springframework.modulith: INFO
-    org.springframework.data.jdbc: DEBUG
-    org.hibernate: WARN
+    org.hibernate: INFO
     nl.svb.dms.ddd_lease_api: DEBUG

@@ -28,7 +28,7 @@ class ContractDomainRepositoryAdapter implements ContractDomainRepository {
   @Override
   public void handle(ContractFilledOutEvent contractFilledOutEvent) {
 
-    final var contractJpaEntity = ContractJpaEntity.from(contractFilledOutEvent.getContract());
+    final var contractJpaEntity = ContractDocument.from(contractFilledOutEvent.getContract());
     persistEvent(contractJpaEntity);
     publishEvent(contractFilledOutEvent);
   }
@@ -56,7 +56,7 @@ class ContractDomainRepositoryAdapter implements ContractDomainRepository {
     final var contractReferenceUUID = contractReference.contractReference();
     final var optionalContractJpaEntity = repository.findByContractReference(contractReferenceUUID);
 
-    return optionalContractJpaEntity.map(ContractJpaEntity::toContract);
+    return optionalContractJpaEntity.map(ContractDocument::toContract);
   }
 
   @Override
@@ -67,9 +67,9 @@ class ContractDomainRepositoryAdapter implements ContractDomainRepository {
     return ThreadLocalRandom.current().nextDouble(80, 101);
   }
 
-  private void persistEvent(ContractJpaEntity contractJpaEntity) {
-    log.debug("saving jpa entity: {}", contractJpaEntity);
-    repository.persist(contractJpaEntity);
+  private void persistEvent(ContractDocument contractDocument) {
+    log.debug("saving jpa entity: {}", contractDocument);
+    repository.save(contractDocument);
   }
 
   private void publishEvent(LegalEvent legalEvent) {
@@ -86,7 +86,7 @@ class ContractDomainRepositoryAdapter implements ContractDomainRepository {
   }
 
   @SneakyThrows
-  private ContractJpaEntity findContractJpaEntityBy(ContractReference contractReference) {
+  private ContractDocument findContractJpaEntityBy(ContractReference contractReference) {
 
     return repository.findByContractReference(contractReference.contractReference())
         .orElseThrow(() -> new ContractNotFoundException(contractReference));
